@@ -1,0 +1,48 @@
+@font-face 
+{
+  font-family: "sarabun"; 
+  src: url(.././assets/Sarabun-Medium.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,body{
+  font-family: 'sarabun' !important;
+}
+
+.text-center{
+  text-align: center !important;
+}
+
+.text-right{
+  text-align: right !important;
+}
+
+.text-left{
+  text-align: left !important;
+}
+
+.d-flex{
+  display: flex !important;
+}
+
+.align-center{
+  align-items: center;
+}
+
+.min-h-100{
+  min-height: 100vh !important;
+}
+
+.w-100{
+  width: 100%;
+}
+
+.mt-3{
+  margin-top: 1rem !important;
+}
+
+.doc-form{
+  background-color: #fff;
+  padding: 1rem !important;
+}
