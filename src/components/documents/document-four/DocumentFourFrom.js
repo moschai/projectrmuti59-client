@@ -103,58 +103,36 @@ const DocumentFourForm = ({ title }) => {
         <h2 className="text-center">
           แบบคำร้องขอลงทะเบียน เกิน/ต่ำกว่าเกฑ์ที่กำหนด
         </h2>
-        <Row gutter={[10]}>
-          <Form.Item name="overlowstandard" label="ขอลงทะเบียน">
+
+        <Row gutter={[6]}>
+          <Form.Item
+            name="termstudy"
+            label="ขอลงทะเบียนเรียนต่ำ-เกินกว่าหน่วยกิตที่กำหนด ภาคเรียนที่"
+          >
             <Radio.Group>
-              <Radio value="10">ต่ำกว่าเกฑ์ที่กำหนด</Radio>
-              <Radio value="11">เกินกว่าเกฑ์ที่กำหนด</Radio>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
             </Radio.Group>
           </Form.Item>
 
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="ในภาคการศึกษานร่ได้ลงทะเบียนไว้แล้วจำนวน(หน่วยกิต)"
-              name="termunit"
-              rules={[{ required: true, message: "กรุณากรอกหน่วยกิต" }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={[10]}>
-          <Form.Item name="overlowstandard" label="ขอลงทะเบียน">
-            <Radio.Group>
-              <Radio value="10">ต่ำกว่าเกฑ์ที่กำหนด</Radio>
-              <Radio value="11">เกินกว่าเกฑ์ที่กำหนด</Radio>
-            </Radio.Group>
+          <Form.Item
+            label="ปีการศึกษา"
+            name="yearstudy"
+            rules={[{ required: true, message: "กรุณากรอกปีการศึกษา" }]}
+          >
+            <Input />
           </Form.Item>
-
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="คงเหลือ/รวมเป็น(หน่วยกิต)"
-              name="sumorremainunit"
-              rules={[{ required: true, message: "กรุณากรอกหน่วยกิต" }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="เนื่องจาก"
-              name="overslowstandardsince"
-              rules={[
-                {
-                  required: true,
-                  message: "กรุณากรอกสาเหตุที่ลงทะเบียนต่ำ/เกินกว่าเกณฑ์",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
         </Row>
+        <Form.Item name="dear" label="เรียน">
+          <Radio.Group>
+            <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
+            <Radio value="11">คณบดี</Radio>
+            <Radio value="12">คณะวิศวกรรมศาสตร์</Radio>
+            <Radio value="13">คณะครุศาสตร์อุตสาหกรรม</Radio>
+            <Radio value="14">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio>
+          </Radio.Group>
+        </Form.Item>
 
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -198,15 +176,28 @@ const DocumentFourForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={[6]}>
-          <Form.Item name="lveducation" label="ระดับการศึกษา">
-            <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
-            </Radio.Group>
-          </Form.Item>
 
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
+        <Form.Item name="lveducation" label="ระดับการศึกษา">
+          <Radio.Group>
+            <Radio value={10}>ปวช.</Radio>
+            <Radio value={11}>ปวส.</Radio>
+            <Radio value={12}>ปริญญาตรี</Radio>
+            <Radio value={13}>ปริญญาโท</Radio>
+            <Radio value={14}>ปริญญาเอก</Radio>
+          </Radio.Group>
+        </Form.Item>
+
+        <Row gutter={[6]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
               label="สาขาวิชา"
@@ -220,15 +211,61 @@ const DocumentFourForm = ({ title }) => {
               </Select>
             </Form.Item>
           </Col>
+
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
+            </Radio.Group>
+          </Form.Item>
+
+          <Col xs={24} sm={24} md={12} span={12}>
+            <Form.Item
+              label="เกรดเฉลี่ยนสะสม"
+              name="cumulativeGpa"
+              rules={[{ required: true, message: "กรุณากรอกเกรดเฉลี่ยสะสม" }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
         </Row>
 
-        <Form.Item name="faculty" label="คณะ">
-          <Radio.Group defaultValue="11">
-            {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
-            <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
-            {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
-          </Radio.Group>
-        </Form.Item>
+        <Row gutter={[10]}>
+          <Form.Item name="overlowstandard" label="ขอลงทะเบียน">
+            <Radio.Group>
+              <Radio value="10">
+                ต่ำกว่าเกฑ์ที่กำหนด โดยมีจำนวนหน่วยกิตรวมทั้งสิ้น
+              </Radio>
+              <Radio value="11">
+                เกินกว่าเกฑ์ที่กำหนด โดยมีจำนวนหน่วยกิตรวมทั้งสิ้น
+              </Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            label="(หน่วยกิต)"
+            name="sumorremainunit"
+            rules={[{ required: true, message: "กรุณากรอกหน่วยกิต" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Row>
+
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="เนื่องจาก"
+            name="overslowstandardsince"
+            rules={[
+              {
+                required: true,
+                message: "กรุณากรอกสาเหตุที่ลงทะเบียนต่ำ/เกินกว่าเกณฑ์",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
 
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item

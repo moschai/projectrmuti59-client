@@ -23,5 +23,9 @@ export const appPath = {
 
   authority: {
     root: "/authority",
+    document: "/document",
+    approve: "/approve",
   },
 };
+
+// "http:localhost:3000/authority/document"

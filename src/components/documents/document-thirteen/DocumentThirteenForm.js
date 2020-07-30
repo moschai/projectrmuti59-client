@@ -24,49 +24,106 @@ const DocumentThirteenForm = ({ title }) => {
   const [majors, setMajors] = useState([]);
   const [authoritys, setAuthoritys] = useState([]);
   const [selectMajor, setSelectMajor] = useState(null);
+
+  const [showcertificateTsc, setShowcertificateTsc] = useState(false);
+  const [showcerTscthaiversion, setShowcerTscthaiversion] = useState(false);
+  const [showcerTscengversion, setShowcerTscengversion] = useState(false);
+
   const [showcertificatestudy, setShowcertificatestudy] = useState(false);
   const [showcerstudythaiversion, setShowcerstudythaiversion] = useState(false);
   const [showcerstudyengversion, setShowcerstudyengversion] = useState(false);
+
   const [showcertificatesuccess, setShowcertificatesuccess] = useState(false);
   const [showcersuccessthaiversion, setShowcersuccessthaiversion] = useState(
     false
   );
+  const [showcersuccessengversion, setShowcersuccessengversion] = useState(
+    false
+  );
+
   const [showcertificateregister, setShowcertificateregister] = useState(false);
   const [showcerregisterthaiversion, setShowcerregisterthaiversion] = useState(
     false
   );
-  const [showtranscripstudy, setShowtranscripstudy] = useState(false);
-  const [showtranscripthaiversion, setShowtranscripthaiversion] = useState(
+  const [showcerregisterengversion, setShowcerregisterengversion] = useState(
     false
   );
-  const [showtranscripengversion, setShowtranscripengversion] = useState(false);
+
+  const [showotherstudy, setShowotherstudy] = useState(false);
+  const [showotherstudythaiversion, setShowotherstudythaiversion] = useState(
+    false
+  );
+  const [showotherstudyengversion, setShowotherstudyengversion] = useState(
+    false
+  );
+
+  const [showcertificatestdcard, setShowcertificatestdcard] = useState(false);
+  const [showcerstdcardthaiversion, setShowcerstdcardthaiversion] = useState(
+    false
+  );
+  const [showcerstdcardengversion, setShowcerstdcardengversion] = useState(
+    false
+  );
+
   const [showtranscripsuccess, setShowtranscripsuccess] = useState(false);
   const [showtcsuccessthaiversion, setShowtcsuccessthaiversion] = useState(
     false
   );
   const [showtcsuccessengversion, setShowtcsuccessengversion] = useState(false);
-  const [showdimplomalvone, setShowdimplomalvone] = useState(false);
-  const [showdpmlvonethaiversion, setShowdpmlvonethaiversion] = useState(false);
-  const [showdpmlvoneengversion, setShowdpmlvoneengversion] = useState(false);
-  const [showdimplomalvtwo, setShowdimplomalvtwo] = useState(false);
-  const [showdpmlvtwothaiversion, setShowdpmlvtwothaiversion] = useState(false);
-  const [showdpmlvtwoengversion, setShowdpmlvtwoengversion] = useState(false);
-  const [showdimplomalvthree, setShowdimplomalvthree] = useState(false);
-  const [showdpmlvthreethaiversion, setShowdpmlvthreethaiversion] = useState(
-    false
-  );
-  const [showdpmlvthreeengversion, setShowdpmlvthreeengversion] = useState(
-    false
-  );
-  const [showdimplomalvfour, setShowdimplomalvfour] = useState(false);
-  const [showdpmlvfourthaiversion, setShowdpmlvfourthaiversion] = useState(
-    false
-  );
-  const [showdpmlvfourengversion, setShowdpmlvfourengversion] = useState(false);
-  const [showcertificateunit, setShowcertificateunit] = useState(false);
-  const [showctfcthaiversion, setShowctfcthaiversion] = useState(false);
-  const [showotherdocument, setShowotherdocument] = useState(false);
-  const [showotherdocthaiversion, setShowotherdocthaiversion] = useState(false);
+
+  const [showboardcerapprove, setShowboardcerapprove] = useState(false);
+  const [
+    showboardcerapprovethaiversion,
+    setShowboardcerapprovethaiversion,
+  ] = useState(false);
+  const [
+    showboardcerapproveengversion,
+    setShowboardcerapproveengversion,
+  ] = useState(false);
+
+  const [showcersuccessstudy, setShowcersuccessstudy] = useState(false);
+  const [
+    showcersuccessstudythaiversion,
+    setShowcersuccessstudythaiversion,
+  ] = useState(false);
+  const [
+    showcersuccessstudyengversion,
+    setShowcersuccessstudyengversion,
+  ] = useState(false);
+
+  const [showsubstitudedimploma, setShowsubstitudedimploma] = useState(false);
+  const [
+    showsubstitudedimplomathaiversion,
+    setShowsubstitudedimplomathaiversion,
+  ] = useState(false);
+
+  const [showsubstitudedegree, setShowsubstitudedegree] = useState(false);
+  const [
+    showsubstitudedegreethaiversion,
+    setShowsubstitudedegreethaiversion,
+  ] = useState(false);
+
+  const [showTranslationdimploma, setShowTranslationdimploma] = useState(false);
+  const [
+    showTranslationdimplomaengversion,
+    setShowTranslationdimplomaengversion,
+  ] = useState(false);
+
+  const [showTranslationdegree, setShowTranslationdegree] = useState(false);
+  const [
+    showTranslationdegreeengversion,
+    setShowTranslationdegreeengversion,
+  ] = useState(false);
+
+  const [showothersuccessstudy, setShowothersuccessstudy] = useState(false);
+  const [
+    showothersuccessstudythaiversion,
+    setShowothersuccessstudythaiversion,
+  ] = useState(false);
+  const [
+    showothersuccessstudyengversion,
+    setShowothersuccessstudyengversion,
+  ] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -174,6 +231,27 @@ const DocumentThirteenForm = ({ title }) => {
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
+              label="ชื่อ(ภาษาอังกฤษ)"
+              name="nameeng"
+              rules={[{ required: true, message: "กรุณากรอกชื่อ" }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={24} md={12} span={12}>
+            <Form.Item
+              label="นามสกุล(ภาษาอังกฤษ)"
+              name="surnameeng"
+              rules={[{ required: true, message: "กรุณากรอกนามสกุล" }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={[8]}>
+          <Col xs={24} sm={24} md={12} span={12}>
+            <Form.Item
               label="รหัสนักศึกษา"
               name="id_std"
               rules={[{ required: true, message: "กรุณากรอกรหัสนักศึกษา" }]}
@@ -192,14 +270,18 @@ const DocumentThirteenForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
+
+        <Form.Item name="lveducation" label="ระดับการศึกษา">
+          <Radio.Group>
+            <Radio value={10}>ปวช.</Radio>
+            <Radio value={11}>ปวส.</Radio>
+            <Radio value={12}>ปริญญาตรี</Radio>
+            <Radio value={13}>ปริญญาโท</Radio>
+            <Radio value={14}>ปริญญาเอก</Radio>
+          </Radio.Group>
+        </Form.Item>
+
         <Row gutter={[6]}>
-          <Form.Item name="lveducation" label="ระดับการศึกษา">
-            <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
-            </Radio.Group>
-          </Form.Item>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
               label="สาขาวิชา"
@@ -213,14 +295,124 @@ const DocumentThirteenForm = ({ title }) => {
               </Select>
             </Form.Item>
           </Col>
+
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
+            </Radio.Group>
+          </Form.Item>
         </Row>
+
+        <Row gutter={[6]}>
+          <Col xs={24} sm={24} md={12} span={12}>
+            <Form.Item
+              label="ที่อยู่ปัจจุบัน"
+              name="currentaddress"
+              rules={[{ required: true, message: "กรุณากรอกที่อยู่ปัจจุบัน" }]}
+            >
+              <Input placeholder="ตัวอย่างเช่น 5/99 ม.6 ต.โนนสมบูรณ์ อ.บ้านแฮด จ.ขอนแก่น 40110" />
+            </Form.Item>
+          </Col>
+
+          <Col xs={24} sm={24} md={12} span={12}>
+            <Form.Item
+              label="วันที่เข้าศึกษา"
+              name="daystudy"
+              rules={[{ required: true, message: "กรุณากรอกวันที่เข้าศึกษา" }]}
+            >
+              <Input placeholder="ตัวอย่างเช่น 12 สิงคมหา พ.ศ.2556" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="วันที่สำเร็จการศึกษา (กรณีคนที่สำเร็จการศึกษา)"
+            name="daysuccessstudy"
+          >
+            <Input placeholder="ตัวอย่างเช่น 12 มีนาคม พ.ศ. 2563" />
+          </Form.Item>
+        </Col>
 
         <Divider />
         <h4>กำลังศึกษาอยู่</h4>
+
+        <div style={{ paddingLeft: 10 }}>
+          <Form.Item
+            name="certificateTsc"
+            label=" หนังสือรับรองผลการศึกษา (ไม่ต้องแนบรูปถ่าย)"
+          >
+            <Checkbox
+              onChange={(e) => {
+                setShowcertificateTsc(e.target.checked);
+              }}
+            />
+          </Form.Item>
+
+          {showcertificateTsc && (
+            <div style={{ paddingLeft: 15 }}>
+              <Row>
+                <Col xs={24} sx={24} lg={12} span={12}>
+                  <Row>
+                    <Form.Item name="cerTscthaiversion" label="ไทย">
+                      <Checkbox
+                        onChange={(e) => {
+                          setShowcerTscthaiversion(e.target.checked);
+                        }}
+                      />
+                    </Form.Item>
+                    {showcerTscthaiversion && (
+                      <>
+                        <Form.Item
+                          style={{ marginLeft: 5 }}
+                          name="cerTscunitthai"
+                          label="จำนวน"
+                          className="ml-3"
+                          rules={[{ required: true, message: "ระบุ" }]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                        <span>ฉบับ</span>
+                      </>
+                    )}
+                  </Row>
+                </Col>
+                <Col xs={24} sx={24} lg={12} span={12}>
+                  <Row>
+                    <Form.Item name="cerTscengversion" label="อังกฤษ">
+                      <Checkbox
+                        onChange={(e) => {
+                          setShowcerTscengversion(e.target.checked);
+                        }}
+                      />
+                    </Form.Item>
+                    {showcerTscengversion && (
+                      <>
+                        <Form.Item
+                          style={{ marginLeft: 5 }}
+                          name="cerTscuniteng"
+                          label="จำนวน"
+                          className="ml-3"
+                          rules={[{ required: true, message: "ระบุ" }]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                        <span>ฉบับ</span>
+                      </>
+                    )}
+                  </Row>
+                </Col>
+              </Row>
+            </div>
+          )}
+        </div>
+        <Divider />
+
         <div style={{ paddingLeft: 10 }}>
           <Form.Item
             name="certificatestudy"
-            label=" ใบรับรองการเป็นนักศึกษา (แนบรูปถ่าย 1” สี (ชุดนักศึกษา))"
+            label=" หนังสือรับรองการเป็นนักศึกษา (แนบรูปถ่าย 1” สี (ชุดนักศึกษา))"
           >
             <Checkbox
               onChange={(e) => {
@@ -290,54 +482,8 @@ const DocumentThirteenForm = ({ title }) => {
 
         <div style={{ paddingLeft: 10 }}>
           <Form.Item
-            name="certificatesuccess"
-            label=" ใบรับรองจบทุกลักษณะรายวิชา (เสนอชื่อเข้าสภาเรียบร้อยแล้ว)"
-          >
-            <Checkbox
-              onChange={(e) => {
-                setShowcertificatesuccess(e.target.checked);
-              }}
-            />
-          </Form.Item>
-
-          {showcertificatesuccess && (
-            <div style={{ paddingLeft: 15 }}>
-              <Row>
-                <Col xs={24} sx={24} lg={12} span={12}>
-                  <Row>
-                    <Form.Item name="cerstudythaiversion" label="ไทย">
-                      <Checkbox
-                        onChange={(e) => {
-                          setShowcersuccessthaiversion(e.target.checked);
-                        }}
-                      />
-                    </Form.Item>
-                    {showcersuccessthaiversion && (
-                      <>
-                        <Form.Item
-                          style={{ marginLeft: 5 }}
-                          name="cersuccessunitthai"
-                          label="จำนวน"
-                          className="ml-3"
-                          rules={[{ required: true, message: "ระบุ" }]}
-                        >
-                          <InputNumber min={1} />
-                        </Form.Item>
-                        <span>ฉบับ</span>
-                      </>
-                    )}
-                  </Row>
-                </Col>
-              </Row>
-            </div>
-          )}
-        </div>
-        <Divider />
-
-        <div style={{ paddingLeft: 10 }}>
-          <Form.Item
             name="certificateregister"
-            label=" ใบรับรองลงทะเบียนครบทุกลักษณะรายวิชาอยู่ระหว่างรอประมวลผล (แนบรูปถ่าย 1” สี (ชุดนักศึกษา)) "
+            label=" หนังสือรับรองลงทะเบียนครบตามโครงสร้างหลักสูตร (ก่อนการอนุมัติการศึกษาประจำภาค ไม่ต้องแนบรูปถ่าย)"
           >
             <Checkbox
               onChange={(e) => {
@@ -374,6 +520,31 @@ const DocumentThirteenForm = ({ title }) => {
                     )}
                   </Row>
                 </Col>
+                <Col xs={24} sx={24} lg={12} span={12}>
+                  <Row>
+                    <Form.Item name="cerregisterengversion" label="อังกฤษ">
+                      <Checkbox
+                        onChange={(e) => {
+                          setShowcerregisterengversion(e.target.checked);
+                        }}
+                      />
+                    </Form.Item>
+                    {showcerregisterengversion && (
+                      <>
+                        <Form.Item
+                          style={{ marginLeft: 5 }}
+                          name="cerregisteruniteng"
+                          label="จำนวน"
+                          className="ml-3"
+                          rules={[{ required: true, message: "ระบุ" }]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                        <span>ฉบับ</span>
+                      </>
+                    )}
+                  </Row>
+                </Col>
               </Row>
             </div>
           )}
@@ -381,32 +552,34 @@ const DocumentThirteenForm = ({ title }) => {
         <Divider />
 
         <div style={{ paddingLeft: 10 }}>
-          <Form.Item name="transcripstudy" label=" ใบแสดงผลการศึกษา ">
+          <Form.Item
+            name="certificatesuccess"
+            label=" หนังสือรับรองจบทุกลักษณะรายวิชา (หลังการอนุมัติการศึกษาประจำภาค รอสภามหาวิทยาลัยฯ อนมุติ ไม่ต้องแนบรูปถ่าย)"
+          >
             <Checkbox
               onChange={(e) => {
-                setShowtranscripstudy(e.target.checked);
+                setShowcertificatesuccess(e.target.checked);
               }}
             />
           </Form.Item>
 
-          {showtranscripstudy && (
+          {showcertificatesuccess && (
             <div style={{ paddingLeft: 15 }}>
               <Row>
                 <Col xs={24} sx={24} lg={12} span={12}>
                   <Row>
-                    <Form.Item name="transcripthaiversion" label="ไทย">
+                    <Form.Item name="cersuccessthaiversion" label="ไทย">
                       <Checkbox
                         onChange={(e) => {
-                          setShowtranscripthaiversion(e.target.checked);
+                          setShowcersuccessthaiversion(e.target.checked);
                         }}
                       />
                     </Form.Item>
-
-                    {showtranscripthaiversion && (
+                    {showcersuccessthaiversion && (
                       <>
                         <Form.Item
                           style={{ marginLeft: 5 }}
-                          name="transcripunitthai"
+                          name="cersuccessunitthai"
                           label="จำนวน"
                           className="ml-3"
                           rules={[{ required: true, message: "ระบุ" }]}
@@ -420,18 +593,166 @@ const DocumentThirteenForm = ({ title }) => {
                 </Col>
                 <Col xs={24} sx={24} lg={12} span={12}>
                   <Row>
-                    <Form.Item name="transcripengversion" label="อังกฤษ">
+                    <Form.Item name="cersuccessengversion" label="อังกฤษ">
                       <Checkbox
                         onChange={(e) => {
-                          setShowtranscripengversion(e.target.checked);
+                          setShowcersuccessengversion(e.target.checked);
                         }}
                       />
                     </Form.Item>
-                    {showtranscripengversion && (
+                    {showcersuccessengversion && (
                       <>
                         <Form.Item
                           style={{ marginLeft: 5 }}
-                          name="transcripuniteng"
+                          name="cersuccessuniteng"
+                          label="จำนวน"
+                          className="ml-3"
+                          rules={[{ required: true, message: "ระบุ" }]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                        <span>ฉบับ</span>
+                      </>
+                    )}
+                  </Row>
+                </Col>
+              </Row>
+            </div>
+          )}
+        </div>
+        <Divider />
+
+        <div style={{ paddingLeft: 10 }}>
+          <Form.Item
+            name="certificatestdcard"
+            label=" ใบแทนบัตรประจำตัวนักศึกษา(ไม่ต้องแนบรูปถ่าย) "
+          >
+            <Checkbox
+              onChange={(e) => {
+                setShowcertificatestdcard(e.target.checked);
+              }}
+            />
+          </Form.Item>
+
+          {showcertificatestdcard && (
+            <div style={{ paddingLeft: 15 }}>
+              <Row>
+                <Col xs={24} sx={24} lg={12} span={12}>
+                  <Row>
+                    <Form.Item name="cerstdcardthaiversion" label="ไทย">
+                      <Checkbox
+                        onChange={(e) => {
+                          setShowcerstdcardthaiversion(e.target.checked);
+                        }}
+                      />
+                    </Form.Item>
+
+                    {showcerstdcardthaiversion && (
+                      <>
+                        <Form.Item
+                          style={{ marginLeft: 5 }}
+                          name="cerstdcardunitthai"
+                          label="จำนวน"
+                          className="ml-3"
+                          rules={[{ required: true, message: "ระบุ" }]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                        <span>ฉบับ</span>
+                      </>
+                    )}
+                  </Row>
+                </Col>
+                <Col xs={24} sx={24} lg={12} span={12}>
+                  <Row>
+                    <Form.Item name="cerstdcardengversion" label="อังกฤษ">
+                      <Checkbox
+                        onChange={(e) => {
+                          setShowcerstdcardengversion(e.target.checked);
+                        }}
+                      />
+                    </Form.Item>
+                    {showcerstdcardengversion && (
+                      <>
+                        <Form.Item
+                          style={{ marginLeft: 5 }}
+                          name="cerstdcarduniteng"
+                          label="จำนวน"
+                          className="ml-3"
+                          rules={[{ required: true, message: "ระบุ" }]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                        <span>ฉบับ</span>
+                      </>
+                    )}
+                  </Row>
+                </Col>
+              </Row>
+            </div>
+          )}
+        </div>
+        <Divider />
+
+        <div style={{ paddingLeft: 10 }}>
+          <Form.Item name="otherstudy" label=" หนังสือรับรองอื่นๆ (ระบุ)">
+            <Checkbox
+              onChange={(e) => {
+                setShowotherstudy(e.target.checked);
+              }}
+            />
+          </Form.Item>
+
+          {showotherstudy && (
+            <div style={{ paddingLeft: 15 }}>
+              <Form.Item
+                style={{ marginLeft: 5 }}
+                name="otherstudymessage"
+                className="ml-3"
+                rules={[{ required: true, message: "ระบุ" }]}
+              >
+                <Input />
+              </Form.Item>
+              <Row>
+                <Col xs={24} sx={24} lg={12} span={12}>
+                  <Row>
+                    <Form.Item name="otherstudythaiversion" label="ไทย">
+                      <Checkbox
+                        onChange={(e) => {
+                          setShowotherstudythaiversion(e.target.checked);
+                        }}
+                      />
+                    </Form.Item>
+                    {showotherstudythaiversion && (
+                      <>
+                        <Form.Item
+                          style={{ marginLeft: 5 }}
+                          name="otherstudyunitthai"
+                          label="จำนวน"
+                          className="ml-3"
+                          rules={[{ required: true, message: "ระบุ" }]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                        <span>ฉบับ</span>
+                      </>
+                    )}
+                  </Row>
+                </Col>
+                <Col xs={24} sx={24} lg={12} span={12}>
+                  <Row>
+                    <Form.Item name="otherstudyengversion" label="อังกฤษ">
+                      <Checkbox
+                        onChange={(e) => {
+                          setShowotherstudyengversion(e.target.checked);
+                        }}
+                      />
+                    </Form.Item>
+                    {showotherstudyengversion && (
+                      <>
+                        <Form.Item
+                          style={{ marginLeft: 5 }}
+                          name="otherstudyuniteng"
                           label="จำนวน"
                           className="ml-3"
                           rules={[{ required: true, message: "ระบุ" }]}
@@ -453,7 +774,7 @@ const DocumentThirteenForm = ({ title }) => {
         <div style={{ paddingLeft: 10 }}>
           <Form.Item
             name="transcripsuccess"
-            label=" ใบแสดงผลการศึกษา (แนบรูปถ่าย 1” สี ปวส-ชุดนักศึกษา, ป.ตรี- ชุดครุย) "
+            label=" ใบแสดงผลการศึกษา (นักศึกษาที่สำเร็จการศึกษาตั้งแต่ปีการศึกษา 2558 เป็นต้นไป ไม่ต้องแนบรูปถ่าย) "
           >
             <Checkbox
               onChange={(e) => {
@@ -523,33 +844,33 @@ const DocumentThirteenForm = ({ title }) => {
 
         <div style={{ paddingLeft: 10 }}>
           <Form.Item
-            name="dimplomalvone"
-            label="ใบแทนประกาศนียบัตร /ใบแปลประกาศนียบัตร  ปวช (แนบใบแจ้งความเอกสารหาย/สําเนาใบประกาศนียบัตร) "
+            name="boardcerapprove"
+            label=" ใบรับรองสภามหาวิทยาลัยอนุมัติให้สำเร็จการศึกษา (แนบรูปถ่ายชุดครุย 1 นิ้ว) "
           >
             <Checkbox
               onChange={(e) => {
-                setShowdimplomalvone(e.target.checked);
+                setShowboardcerapprove(e.target.checked);
               }}
             />
           </Form.Item>
 
-          {showdimplomalvone && (
+          {showboardcerapprove && (
             <div style={{ paddingLeft: 15 }}>
               <Row>
                 <Col xs={24} sx={24} lg={12} span={12}>
                   <Row>
-                    <Form.Item name="dpmlvonethaiversion" label="ไทย">
+                    <Form.Item name="boardcerapprovethaiversion" label="ไทย">
                       <Checkbox
                         onChange={(e) => {
-                          setShowdpmlvonethaiversion(e.target.checked);
+                          setShowboardcerapprovethaiversion(e.target.checked);
                         }}
                       />
                     </Form.Item>
-                    {showdpmlvonethaiversion && (
+                    {showboardcerapprovethaiversion && (
                       <>
                         <Form.Item
                           style={{ marginLeft: 5 }}
-                          name="dpmlvoneunitthai"
+                          name="boardcerapproveunitthai"
                           label="จำนวน"
                           className="ml-3"
                           rules={[{ required: true, message: "ระบุ" }]}
@@ -563,18 +884,18 @@ const DocumentThirteenForm = ({ title }) => {
                 </Col>
                 <Col xs={24} sx={24} lg={12} span={12}>
                   <Row>
-                    <Form.Item name="dpmlvoneengversion" label="อังกฤษ">
+                    <Form.Item name="boardcerapproveengversion" label="อังกฤษ">
                       <Checkbox
                         onChange={(e) => {
-                          setShowdpmlvoneengversion(e.target.checked);
+                          setShowboardcerapproveengversion(e.target.checked);
                         }}
                       />
                     </Form.Item>
-                    {showdpmlvoneengversion && (
+                    {showboardcerapproveengversion && (
                       <>
                         <Form.Item
                           style={{ marginLeft: 5 }}
-                          name="dpmlvoneuniteng"
+                          name="boardcerapproveuniteng"
                           label="จำนวน"
                           className="ml-3"
                           rules={[{ required: true, message: "ระบุ" }]}
@@ -594,33 +915,33 @@ const DocumentThirteenForm = ({ title }) => {
 
         <div style={{ paddingLeft: 10 }}>
           <Form.Item
-            name="dimplomalvtwo"
-            label="ใบแทนประกาศนียบัตร /ใบแปลประกาศนียบัตร  ปวส (แนบใบแจ้งความเอกสารหาย/สําเนาใบประกาศนียบัตร) "
+            name="cersuccessstudy"
+            label=" ใบรับรองสำเร็จการศึกษา (ไม่ต้องแนบรูปถ่าย) "
           >
             <Checkbox
               onChange={(e) => {
-                setShowdimplomalvtwo(e.target.checked);
+                setShowcersuccessstudy(e.target.checked);
               }}
             />
           </Form.Item>
 
-          {showdimplomalvtwo && (
+          {showcersuccessstudy && (
             <div style={{ paddingLeft: 15 }}>
               <Row>
                 <Col xs={24} sx={24} lg={12} span={12}>
                   <Row>
-                    <Form.Item name="dpmlvtwothaiversion" label="ไทย">
+                    <Form.Item name="cersuccessstudythaiversion" label="ไทย">
                       <Checkbox
                         onChange={(e) => {
-                          setShowdpmlvtwothaiversion(e.target.checked);
+                          setShowcersuccessstudythaiversion(e.target.checked);
                         }}
                       />
                     </Form.Item>
-                    {showdpmlvtwothaiversion && (
+                    {showcersuccessstudythaiversion && (
                       <>
                         <Form.Item
                           style={{ marginLeft: 5 }}
-                          name="dpmlvtwounitthai"
+                          name="cersuccessstudyunitthai"
                           label="จำนวน"
                           className="ml-3"
                           rules={[{ required: true, message: "ระบุ" }]}
@@ -634,18 +955,18 @@ const DocumentThirteenForm = ({ title }) => {
                 </Col>
                 <Col xs={24} sx={24} lg={12} span={12}>
                   <Row>
-                    <Form.Item name="dpmlvtwoengversion" label="อังกฤษ">
+                    <Form.Item name="cersuccessstudyengversion" label="อังกฤษ">
                       <Checkbox
                         onChange={(e) => {
-                          setShowdpmlvtwoengversion(e.target.checked);
+                          setShowcersuccessstudyengversion(e.target.checked);
                         }}
                       />
                     </Form.Item>
-                    {showdpmlvtwoengversion && (
+                    {showcersuccessstudyengversion && (
                       <>
                         <Form.Item
                           style={{ marginLeft: 5 }}
-                          name="dpmlvtwouniteng"
+                          name="cersuccessstudyuniteng"
                           label="จำนวน"
                           className="ml-3"
                           rules={[{ required: true, message: "ระบุ" }]}
@@ -665,58 +986,35 @@ const DocumentThirteenForm = ({ title }) => {
 
         <div style={{ paddingLeft: 10 }}>
           <Form.Item
-            name="dimplomalvthree"
-            label=" ใบแทนปริญญาบัตร /ใบแปลปริญญาบัตร  ป.ตรี (แนบใบแจ้งความเอกสารหาย/สําเนาใบปริญญาบัตร)  "
+            name="substitudedimploma"
+            label=" ใบแทนใบประกาศนียบัตร (เฉพาะกรณีที่สูญหาย)(แนบรูปถ่ายชุดนักศึกษา 1 นิ้ว) "
           >
             <Checkbox
               onChange={(e) => {
-                setShowdimplomalvthree(e.target.checked);
+                setShowsubstitudedimploma(e.target.checked);
               }}
             />
           </Form.Item>
 
-          {showdimplomalvthree && (
+          {showsubstitudedimploma && (
             <div style={{ paddingLeft: 15 }}>
               <Row>
                 <Col xs={24} sx={24} lg={12} span={12}>
                   <Row>
-                    <Form.Item name="dpmlvthreethaiversion" label="ไทย">
+                    <Form.Item name="substitudedimplomathaiversion" label="ไทย">
                       <Checkbox
                         onChange={(e) => {
-                          setShowdpmlvthreethaiversion(e.target.checked);
+                          setShowsubstitudedimplomathaiversion(
+                            e.target.checked
+                          );
                         }}
                       />
                     </Form.Item>
-                    {showdpmlvthreethaiversion && (
+                    {showsubstitudedimplomathaiversion && (
                       <>
                         <Form.Item
                           style={{ marginLeft: 5 }}
-                          name="dpmlvthreeunitthai"
-                          label="จำนวน"
-                          className="ml-3"
-                          rules={[{ required: true, message: "ระบุ" }]}
-                        >
-                          <InputNumber min={1} />
-                        </Form.Item>
-                        <span>ฉบับ</span>
-                      </>
-                    )}
-                  </Row>
-                </Col>
-                <Col xs={24} sx={24} lg={12} span={12}>
-                  <Row>
-                    <Form.Item name="dpmlvthreeengversion" label="อังกฤษ">
-                      <Checkbox
-                        onChange={(e) => {
-                          setShowdpmlvthreeengversion(e.target.checked);
-                        }}
-                      />
-                    </Form.Item>
-                    {showdpmlvthreeengversion && (
-                      <>
-                        <Form.Item
-                          style={{ marginLeft: 5 }}
-                          name="dpmlvthreeuniteng"
+                          name="substitudedimplomaunitthai"
                           label="จำนวน"
                           className="ml-3"
                           rules={[{ required: true, message: "ระบุ" }]}
@@ -736,124 +1034,33 @@ const DocumentThirteenForm = ({ title }) => {
 
         <div style={{ paddingLeft: 10 }}>
           <Form.Item
-            name="dimplomalvthree"
-            label=" ใบแทนปริญญาบัตร /ใบแปลปริญญาบัตร  ป.โท (แนบใบแจ้งความเอกสารหาย/สําเนาใบปริญญาบัตร)  "
+            name="substitudedegree"
+            label=" ใบแทนใบปริญญาบัตร (เฉพาะกรณีที่สูญหาย)(แนบรูปถ่ายชุดครุย 1 นิ้ว) "
           >
             <Checkbox
               onChange={(e) => {
-                setShowdimplomalvfour(e.target.checked);
+                setShowsubstitudedegree(e.target.checked);
               }}
             />
           </Form.Item>
 
-          {showdimplomalvfour && (
+          {showsubstitudedegree && (
             <div style={{ paddingLeft: 15 }}>
               <Row>
                 <Col xs={24} sx={24} lg={12} span={12}>
                   <Row>
-                    <Form.Item name="dpmlvthreethaiversion" label="ไทย">
+                    <Form.Item name="substitudedegreethaiversion" label="ไทย">
                       <Checkbox
                         onChange={(e) => {
-                          setShowdpmlvfourthaiversion(e.target.checked);
+                          setShowsubstitudedegreethaiversion(e.target.checked);
                         }}
                       />
                     </Form.Item>
-                    {showdpmlvfourthaiversion && (
+                    {showsubstitudedegreethaiversion && (
                       <>
                         <Form.Item
                           style={{ marginLeft: 5 }}
-                          name="dpmlvfourunitthai"
-                          label="จำนวน"
-                          className="ml-3"
-                          rules={[{ required: true, message: "ระบุ" }]}
-                        >
-                          <InputNumber min={1} />
-                        </Form.Item>
-                        <span>ฉบับ</span>
-                      </>
-                    )}
-                  </Row>
-                </Col>
-                <Col xs={24} sx={24} lg={12} span={12}>
-                  <Row>
-                    <Form.Item name="dpmlvfourengversion" label="อังกฤษ">
-                      <Checkbox
-                        onChange={(e) => {
-                          setShowdpmlvfourengversion(e.target.checked);
-                        }}
-                      />
-                    </Form.Item>
-                    {showdpmlvfourengversion && (
-                      <>
-                        <Form.Item
-                          style={{ marginLeft: 5 }}
-                          name="dpmlvfouruniteng"
-                          label="จำนวน"
-                          className="ml-3"
-                          rules={[{ required: true, message: "ระบุ" }]}
-                        >
-                          <InputNumber min={1} />
-                        </Form.Item>
-                        <span>ฉบับ</span>
-                      </>
-                    )}
-                  </Row>
-                </Col>
-              </Row>
-            </div>
-          )}
-        </div>
-        <Divider />
-
-        <h4>บัตรนักศึกษา</h4>
-        <Row gutter={[6]}>
-          <Form.Item
-            name="loststudentcard"
-            label="ดำเนินการเกี่ยวกับบัตรนักศึกษา"
-          >
-            <Radio.Group>
-              <Radio value="10">บัตรเดิมสูญหาย</Radio>
-              <Radio value="11">
-                บัตรเดิมหมดอายุหรือชํารุด (แนบบัตรเดิมประกอบ){" "}
-              </Radio>
-              <Radio value="12">
-                {" "}
-                ใบแทนบัตรนักศึกษา (บัตรชั่วคราวมีอายุ 60 วัน){" "}
-              </Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Row>
-
-        <h4>อื่นๆ</h4>
-        <div style={{ paddingLeft: 10 }}>
-          <Form.Item
-            name="certificateunit"
-            label=" ใบรับรองจบทุกลักษณะรายวิชา (เสนอชื่อเข้าสภาเรียบร้อยแล้ว)"
-          >
-            <Checkbox
-              onChange={(e) => {
-                setShowcertificateunit(e.target.checked);
-              }}
-            />
-          </Form.Item>
-
-          {showcertificateunit && (
-            <div style={{ paddingLeft: 15 }}>
-              <Row>
-                <Col xs={24} sx={24} lg={12} span={12}>
-                  <Row>
-                    <Form.Item name="ctfcthaiversion" label="ไทย">
-                      <Checkbox
-                        onChange={(e) => {
-                          setShowctfcthaiversion(e.target.checked);
-                        }}
-                      />
-                    </Form.Item>
-                    {showctfcthaiversion && (
-                      <>
-                        <Form.Item
-                          style={{ marginLeft: 5 }}
-                          name="ctfcunitthai"
+                          name="substitudedegreeunitthai"
                           label="จำนวน"
                           className="ml-3"
                           rules={[{ required: true, message: "ระบุ" }]}
@@ -872,19 +1079,122 @@ const DocumentThirteenForm = ({ title }) => {
         <Divider />
 
         <div style={{ paddingLeft: 10 }}>
-          <Form.Item name="otherdocument" label="อื่นๆ">
+          <Form.Item
+            name="Translationdimploma"
+            label=" ใบแปลใบประกาศนียบัตร(ให้แนบสำเนาฉบับภาษาไทย) "
+          >
             <Checkbox
               onChange={(e) => {
-                setShowotherdocument(e.target.checked);
+                setShowTranslationdimploma(e.target.checked);
               }}
             />
           </Form.Item>
 
-          {showotherdocument && (
+          {showTranslationdimploma && (
+            <div style={{ paddingLeft: 15 }}>
+              <Row>
+                <Col xs={24} sx={24} lg={12} span={12}>
+                  <Row>
+                    <Form.Item
+                      name="Translationdimplomaengversion"
+                      label="อังกฤษ"
+                    >
+                      <Checkbox
+                        onChange={(e) => {
+                          setShowTranslationdimplomaengversion(
+                            e.target.checked
+                          );
+                        }}
+                      />
+                    </Form.Item>
+                    {showTranslationdimplomaengversion && (
+                      <>
+                        <Form.Item
+                          style={{ marginLeft: 5 }}
+                          name="Translationdimplomauniteng"
+                          label="จำนวน"
+                          className="ml-3"
+                          rules={[{ required: true, message: "ระบุ" }]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                        <span>ฉบับ</span>
+                      </>
+                    )}
+                  </Row>
+                </Col>
+              </Row>
+            </div>
+          )}
+        </div>
+        <Divider />
+
+        <div style={{ paddingLeft: 10 }}>
+          <Form.Item
+            name="Translationdegree"
+            label=" ใบแปลใบปริญญาบัตร(ให้แนบสำเนาฉบับภาษาไทย) "
+          >
+            <Checkbox
+              onChange={(e) => {
+                setShowTranslationdegree(e.target.checked);
+              }}
+            />
+          </Form.Item>
+
+          {showTranslationdegree && (
+            <div style={{ paddingLeft: 15 }}>
+              <Row>
+                <Col xs={24} sx={24} lg={12} span={12}>
+                  <Row>
+                    <Form.Item
+                      name="Translationdegreeengversion"
+                      label="อังกฤษ"
+                    >
+                      <Checkbox
+                        onChange={(e) => {
+                          setShowTranslationdegreeengversion(e.target.checked);
+                        }}
+                      />
+                    </Form.Item>
+                    {showTranslationdegreeengversion && (
+                      <>
+                        <Form.Item
+                          style={{ marginLeft: 5 }}
+                          name="Translationdegreeuniteng"
+                          label="จำนวน"
+                          className="ml-3"
+                          rules={[{ required: true, message: "ระบุ" }]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                        <span>ฉบับ</span>
+                      </>
+                    )}
+                  </Row>
+                </Col>
+              </Row>
+            </div>
+          )}
+        </div>
+        <Divider />
+
+        <div style={{ paddingLeft: 10 }}>
+          <Form.Item
+            name="othersuccessstudy"
+            label=" หนังสือรับรองอื่นๆ (ระบุ)"
+          >
+            <Checkbox
+              onChange={(e) => {
+                setShowothersuccessstudy(e.target.checked);
+              }}
+            />
+          </Form.Item>
+
+          {showothersuccessstudy && (
             <div style={{ paddingLeft: 15 }}>
               <Form.Item
                 style={{ marginLeft: 5 }}
-                name="othermassege"
+                name="othersuccessstudymessage"
                 className="ml-3"
                 rules={[{ required: true, message: "ระบุ" }]}
               >
@@ -893,18 +1203,46 @@ const DocumentThirteenForm = ({ title }) => {
               <Row>
                 <Col xs={24} sx={24} lg={12} span={12}>
                   <Row>
-                    <Form.Item name="otherdocthaiversion" label="ไทย">
+                    <Form.Item name="othersuccessstudythaiversion" label="ไทย">
                       <Checkbox
                         onChange={(e) => {
-                          setShowotherdocthaiversion(e.target.checked);
+                          setShowothersuccessstudythaiversion(e.target.checked);
                         }}
                       />
                     </Form.Item>
-                    {showotherdocthaiversion && (
+                    {showothersuccessstudythaiversion && (
                       <>
                         <Form.Item
                           style={{ marginLeft: 5 }}
-                          name="otherdocunitthai"
+                          name="othersuccessstudyunitthai"
+                          label="จำนวน"
+                          className="ml-3"
+                          rules={[{ required: true, message: "ระบุ" }]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                        <span>ฉบับ</span>
+                      </>
+                    )}
+                  </Row>
+                </Col>
+                <Col xs={24} sx={24} lg={12} span={12}>
+                  <Row>
+                    <Form.Item
+                      name="othersuccessstudyengversion"
+                      label="อังกฤษ"
+                    >
+                      <Checkbox
+                        onChange={(e) => {
+                          setShowothersuccessstudyengversion(e.target.checked);
+                        }}
+                      />
+                    </Form.Item>
+                    {showothersuccessstudyengversion && (
+                      <>
+                        <Form.Item
+                          style={{ marginLeft: 5 }}
+                          name="othersuccessstudyuniteng"
                           label="จำนวน"
                           className="ml-3"
                           rules={[{ required: true, message: "ระบุ" }]}

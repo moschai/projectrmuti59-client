@@ -8,6 +8,7 @@ import {
   Input,
   Select,
   Divider,
+  Checkbox,
   Modal,
   message,
 } from "antd";
@@ -22,6 +23,8 @@ const DocumentElevenForm = ({ title }) => {
   const [majors, setMajors] = useState([]);
   const [authoritys, setAuthoritys] = useState([]);
   const [selectMajor, setSelectMajor] = useState(null);
+  const [showotherdocument, setShowotherdocument] = useState(false);
+  //documentsForAuthority,set..
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -102,16 +105,6 @@ const DocumentElevenForm = ({ title }) => {
       >
         <h2 className="text-center">แบบคำร้องขอเปลี่ยนข้อมูลประวัติ</h2>
 
-        <Form.Item name="a" label="เรียน">
-          <Radio.Group>
-            <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
-            <Radio value="11">คณบดี</Radio>
-            <Radio value="12">คณะวิศวกรรมศาสตร์</Radio>
-            <Radio value="13">คณะครุศาสตร์อุตสาหกรรม</Radio>
-            <Radio value="14">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio>
-          </Radio.Group>
-        </Form.Item>
-
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
@@ -154,15 +147,28 @@ const DocumentElevenForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={[6]}>
-          <Form.Item name="lveducation" label="ระดับการศึกษา">
-            <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
-            </Radio.Group>
-          </Form.Item>
 
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
+        <Form.Item name="lveducation" label="ระดับการศึกษา">
+          <Radio.Group>
+            <Radio value={10}>ปวช.</Radio>
+            <Radio value={11}>ปวส.</Radio>
+            <Radio value={12}>ปริญญาตรี</Radio>
+            <Radio value={13}>ปริญญาโท</Radio>
+            <Radio value={14}>ปริญญาเอก</Radio>
+          </Radio.Group>
+        </Form.Item>
+
+        <Row gutter={[6]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
               label="สาขาวิชา"
@@ -176,65 +182,50 @@ const DocumentElevenForm = ({ title }) => {
               </Select>
             </Form.Item>
           </Col>
-        </Row>
 
-        <Row gutter={[6]}>
-          <Form.Item name="changehistory" label="มีความประสงค์">
-            <Radio.Group>
-              <Radio value="10">ขอเปลี่ยนชื่อตัว</Radio>
-              <Radio value="11">ขอเปลี่ยนชื่อสกุล</Radio>
-              <Radio value="12">ขอเปลี่ยนคำนำหน้าชื่อ-ยศ</Radio>
-              <Radio value="12">ขอเปลี่ยนที่อยู่</Radio>
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
             </Radio.Group>
           </Form.Item>
-
-          <Form.Item
-            label="กรณีอื่นๆโปรดระบุ"
-            name="otherchangehistory"
-            rules={[
-              {
-                required: true,
-                message: "กรุณากรอกความประสงค์ในการเปลี่ยนข้อมูลประวัติ",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
         </Row>
 
-        <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="จากข้อมูลเดิม"
-            name="oldhistory"
-            rules={[{ required: true, message: "กรุณากรอกข้อมูลเดิม" }]}
-          >
-            <Input />
-          </Form.Item>
-        </Col>
+        <Form.Item name="changehistory" label="มีความประสงค์">
+          <Radio.Group>
+            <Radio value="10">ขอเปลี่ยนชื่อนักศึกษา</Radio>
+            <Radio value="11">ขอเปลี่ยนชื่อ-นามสกุล</Radio>
+            <Radio value="12">ขอเปลี่ยนชื่อ-สกุลภาษาอังกฤษ</Radio>
+            <Radio value="13">ขอเปลี่ยนนามสกุลนักศึกษา</Radio>
+            <Radio value="14">ขอเปลี่ยนคำนำหน้าชื่อ</Radio>
+            <Radio value="15">แก้ไขที่อยู่นักศึกษา</Radio>
+          </Radio.Group>
+        </Form.Item>
 
-        <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="เปลี่ยนเป็น"
-            name="newhistory"
-            rules={[
-              { required: true, message: "กรุณากรอกข้อมูลที่ต้องการเปลี่ยน" },
-            ]}
-          >
-            <Input />
+        <div style={{ paddingLeft: 10 }}>
+          <Form.Item name="otherdocument" label="(ในกรณีอื่นๆ)">
+            <Checkbox
+              onChange={(e) => {
+                setShowotherdocument(e.target.checked);
+              }}
+            />
           </Form.Item>
-        </Col>
 
-        <Row gutter={[8]}>
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="ชื่อ-สกุล ภาษาอังกฤษ(กรณีเปลี่ยนชื่อ)"
-              name="newnamehistory"
-              rules={[{ required: true, message: "กรุณากรอกชื่อ" }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
+          {showotherdocument && (
+            <div style={{ paddingLeft: 15 }}>
+              <Form.Item
+                style={{ marginLeft: 5 }}
+                name="othermassege"
+                className="ml-3"
+                rules={[{ required: true, message: "ระบุ" }]}
+              >
+                <Input />
+              </Form.Item>
+            </div>
+          )}
+        </div>
+        <Divider />
 
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item
@@ -246,7 +237,6 @@ const DocumentElevenForm = ({ title }) => {
           </Form.Item>
         </Col>
 
-        <Divider />
         <h4>สาขาวิชาที่นักศึกษาสังกัด</h4>
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item

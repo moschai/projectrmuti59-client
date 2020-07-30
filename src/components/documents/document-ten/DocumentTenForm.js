@@ -141,7 +141,28 @@ const DocumentTenForm = ({ title }) => {
       >
         <h2 className="text-center">แบบคำร้องขอลงทะเบียนเรียนเทียบรายวิชา</h2>
 
-        <Form.Item name="a" label="เรียน">
+        <Row gutter={[6]}>
+          <Form.Item
+            name="compareterm"
+            label="คำร้องขอลงทะเบียนเรียนเทียบรายวิชา ภาคเรียนที่"
+          >
+            <Radio.Group>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            label="ปีการศึกษา"
+            name="compareyeat"
+            rules={[{ required: true, message: "กรุณากรอกปีการศึกษา" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Row>
+
+        <Form.Item name="dear" label="เรียน">
           <Radio.Group>
             <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
             <Radio value="11">คณบดี</Radio>
@@ -193,23 +214,28 @@ const DocumentTenForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
+
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
+        <Form.Item name="lveducation" label="ระดับการศึกษา">
+          <Radio.Group>
+            <Radio value={10}>ปวช.</Radio>
+            <Radio value={11}>ปวส.</Radio>
+            <Radio value={12}>ปริญญาตรี</Radio>
+            <Radio value={13}>ปริญญาโท</Radio>
+            <Radio value={14}>ปริญญาเอก</Radio>
+          </Radio.Group>
+        </Form.Item>
+
         <Row gutter={[6]}>
-          <Form.Item name="lveducation" label="ระดับการศึกษา">
-            <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          <Form.Item name="faculty" label="คณะ">
-            <Radio.Group defaultValue="11">
-              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
-              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
-              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
-            </Radio.Group>
-          </Form.Item>
-
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
               label="สาขาวิชา"
@@ -223,59 +249,24 @@ const DocumentTenForm = ({ title }) => {
               </Select>
             </Form.Item>
           </Col>
-        </Row>
 
-        <Row gutter={[10]}>
-          <Form.Item
-            label="ชั้นปี"
-            name="classyear"
-            rules={[{ required: true, message: "กรุณากรอกชั้นปีที่เรียน" }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="ระยะเวลาที่ศึกษา"
-            name="timestudy"
-            rules={[
-              {
-                required: true,
-                message: "กรุณากรอกระยะเวลาที่ศึกษาตามหลักสูตรที่เรียน",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item name="typestudy" label="ภาค">
-            <Radio.Group>
-              <Radio value="10">ปกติ</Radio>
-              <Radio value="11">สมทบ</Radio>
-              <Radio value="12">พิเศษ</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Row>
-
-        <Row gutter={[8]}>
-          <Form.Item
-            name="compareterm"
-            label="มีความประสงค์ขอลงทะเบียนเรียนเทียบรายวิชาภาคเรียนที่"
-          >
-            <Radio.Group>
-              <Radio value="10">1</Radio>
-              <Radio value="11">2</Radio>
-              <Radio value="12">3</Radio>
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
             </Radio.Group>
           </Form.Item>
 
           <Form.Item
-            label="ปีการศึกษา"
-            name="compareyeat"
-            rules={[{ required: true, message: "กรุณากรอกปีการศึกษา" }]}
+            label="เกรดเฉลี่ยนสะสม"
+            name="cumulativeGpa"
+            rules={[{ required: true, message: "กรุณากรอกเกรดเฉลี่ยสะสม" }]}
           >
             <Input />
           </Form.Item>
         </Row>
+
         <label>โครงสร้างหลักสูตรของนักศึกษา</label>
         <Form.List name="tables">
           {(fields, { add, remove }) => {

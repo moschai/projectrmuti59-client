@@ -54,9 +54,9 @@ const DocumentSixForm = ({ title }) => {
 
   const getMajor = async () => {
     try {
-      const reps = await AuthorityService.getMajors();
-      setMajors(reps.data);
-      console.log(reps);
+      const res = await AuthorityService.getMajors();
+      setMajors(res.data);
+      console.log(res);
     } catch (error) {
       Modal.error({ title: "เกิดข้อผิดพลาดในการโหลดข้อมูลสาขา" });
     }
@@ -135,9 +135,18 @@ const DocumentSixForm = ({ title }) => {
           tables: [{ id_subject: "", namesubject: "" }],
         }}
       >
-        <h2 className="text-center">แบบคำร้องขอลงทะเบียนเพิ่มล่าช้า</h2>
-
-        <Form.Item name="a" label="เรียน">
+        <h2 className="text-center">
+          แบบคำร้องขอลงทะเบียนเพิ่ม/ถอนรายวิชาล่าช้า
+        </h2>
+        <Row gutter={[6]}>
+          <Form.Item name="PlsRegisOverLow" label="คำร้อง">
+            <Radio.Group>
+              <Radio value="1">เพิ่มรายวิชาล่าช้า</Radio>
+              <Radio value="2">ถอนรายวิชาล่าช้า</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </Row>
+        <Form.Item name="dear" label="เรียน">
           <Radio.Group>
             <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
             <Radio value="11">คณบดี</Radio>
@@ -146,7 +155,6 @@ const DocumentSixForm = ({ title }) => {
             <Radio value="14">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio>
           </Radio.Group>
         </Form.Item>
-
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
@@ -167,7 +175,6 @@ const DocumentSixForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
-
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
@@ -189,12 +196,25 @@ const DocumentSixForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
+
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
         <Row gutter={[6]}>
           <Form.Item name="lveducation" label="ระดับการศึกษา">
             <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
+              <Radio value={10}>ปวช.</Radio>
+              <Radio value={11}>ปวส.</Radio>
+              <Radio value={12}>ปริญญาตรี</Radio>
+              <Radio value={13}>ปริญญาโท</Radio>
+              <Radio value={14}>ปริญญาเอก</Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -212,67 +232,84 @@ const DocumentSixForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
-
-        <Row gutter={[6]}>
-          <Form.Item name="termregister" label="ได้ลงทะเบียนเรียนประจำภาคเรียน">
-            <Radio.Group>
-              <Radio value="10">1</Radio>
-              <Radio value="11">2</Radio>
-              <Radio value="12">3</Radio>
+        <Row gutter={[10]}>
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
             </Radio.Group>
           </Form.Item>
 
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="ปีการศึกษา"
-              name="yearregister"
-              rules={[{ required: true, message: "กรุณากรอกปีการศึกษา" }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={[6]}>
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="จำนวน(หน่วยกิต)"
-              name="termtotalunit"
-              rules={[{ required: true, message: "กรุณากรอกหน่วยกิต" }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="มีความประสงค์ลงทะเบียนเรียนเพิ่มจำนวน(หน่วยกิต)"
-              name="addregisterunit"
-              rules={[{ required: true, message: "กรุณากรอกหน่วยกิต" }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item
-            label="รวมหน่วยกิตในภาคเรียนนี้ทั้งสิ้น"
-            name="termsumtotalunit"
+            label="ชั้นปี"
+            name="classyear"
+            rules={[{ required: true, message: "กรุณากรอกชั้นปีที่เรียน" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="ระยะเวลาที่ศึกษา"
+            name="timestudy"
             rules={[
               {
                 required: true,
-                message: "กรุณากรอกหน่วยกิตทั้งหมดของภาคเรียน",
+                message: "กรุณากรอกระยะเวลาที่ศึกษาตามหลักสูตรที่เรียน",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Row>
+        <Row gutter={[6]}>
+          <Form.Item name="termregister" label="ได้ลงทะเบียนเรียนประจำภาคเรียน">
+            <Radio.Group>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            label="ปีการศึกษา"
+            name="yearregister"
+            rules={[{ required: true, message: "กรุณากรอกปีการศึกษา" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="จำนวน(หน่วยกิต)"
+            name="termtotalunit"
+            rules={[{ required: true, message: "กรุณากรอกหน่วยกิต" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Row>
+        <Row gutter={[6]}>
+          <Form.Item name="PlsRegisOverLow" label="มีความประสงค์ขอ">
+            <Radio.Group>
+              <Radio value="1">เพิ่มรายวิชาล่าช้า</Radio>
+              <Radio value="2">ถอนรายวิชาล่าช้า</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </Row>
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="เนื่องจาก"
+            name="since"
+            rules={[
+              {
+                required: true,
+                message: "กรุณากรอกสาเหตุที่ลงทะเบียนเพิ่ม/ถอนรายวิชาล่าช้า",
               },
             ]}
           >
             <Input />
           </Form.Item>
         </Col>
-        <label>
-          รายละเอียดวิชาดังนี้
-          (กรณีรายวิชาที่ลงเพิ่มแล้วหน่วยกิตเกินกว่าเกณฑ์ที่กำหนดต้องยื่นคำร้องขอลงทะเบียนเกินเกณฑ์ที่กำหนด)
-        </label>
+        <label>ดังรายวิชาต่อไปนี้</label>
         <Form.List name="tables">
           {(fields, { add, remove }) => {
             return (
@@ -280,9 +317,6 @@ const DocumentSixForm = ({ title }) => {
                 {fields.map((field, index) => {
                   return (
                     <Row key={field.key} justify="center">
-                      <Col className="pt-3" style={{ padding: 5 }}>
-                        <span> ลำดับ {index + 1}</span>
-                      </Col>
                       <Col>
                         <Form.Item
                           name={[field.name, "id_subject"]}
@@ -311,12 +345,14 @@ const DocumentSixForm = ({ title }) => {
                                 (subject) => subject.id_subject === value
                               );
                               const tables = form.getFieldValue(`tables`);
+
                               if (tables[index]) {
                                 tables[index].namesubject =
                                   subject.name_subject;
+                                tables[index].unit_subject =
+                                  subject.unit_subject;
                               }
                               console.log(tables);
-
                               setFieldsValue({
                                 tables,
                               });
@@ -335,6 +371,17 @@ const DocumentSixForm = ({ title }) => {
                           <Input placeholder="ชื่อวิชา" disabled />
                         </Form.Item>
                       </Col>
+
+                      <Col>
+                        <Form.Item
+                          name={[field.name, "unit_subject"]}
+                          fieldKey={[field.fieldKey, "unit_subject"]}
+                          rules={rules}
+                        >
+                          <Input placeholder="หน่วยกิต" disabled />
+                        </Form.Item>
+                      </Col>
+
                       <Col>
                         <Form.Item
                           name={[field.name, "groupstudy"]}
@@ -360,14 +407,7 @@ const DocumentSixForm = ({ title }) => {
                           </Select>
                         </Form.Item>
                       </Col>
-                      <Col>
-                        <Form.Item
-                          name={[field.name, "note"]}
-                          fieldKey={[field.fieldKey, "note"]}
-                        >
-                          <Input placeholder="หมายเหตุ" />
-                        </Form.Item>
-                      </Col>
+
                       {fields.length > 1 && (
                         <Col flex="none">
                           <MinusCircleOutlined
@@ -418,7 +458,6 @@ const DocumentSixForm = ({ title }) => {
             <Input />
           </Form.Item>
         </Col>
-
         <Divider />
         <h4>สาขาวิชาที่นักศึกษาสังกัด</h4>
         <Col xs={24} sm={24} md={12} span={12}>
@@ -465,7 +504,6 @@ const DocumentSixForm = ({ title }) => {
             </Select>
           </Form.Item>
         </Col>
-
         <div className="text-right">
           <Button
             type="primary"

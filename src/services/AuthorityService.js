@@ -1,6 +1,7 @@
 import axios from "axios";
 import { endpointUrl } from "../config";
-class Document {
+import AuthService from "./AuthService";
+class Authority {
   _prefix;
   constructor() {
     this._prefix = "authority";
@@ -22,7 +23,19 @@ class Document {
       throw new Error(error);
     }
   }
+
+  async getProfile() {
+    try {
+      const response = await axios.get(
+        `${endpointUrl}${this._prefix}/${this._prefix}`,
+        AuthService.getHeaderBearer()
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }
 
-const AuthorityService = new Document();
+const AuthorityService = new Authority();
 export default AuthorityService;

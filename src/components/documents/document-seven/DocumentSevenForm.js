@@ -193,6 +193,17 @@ const DocumentSevenForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
+
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
         <Row gutter={[6]}>
           <Form.Item name="lveducation" label="ระดับการศึกษา">
             <Radio.Group>

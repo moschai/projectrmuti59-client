@@ -103,7 +103,7 @@ const DocumentFourteenForm = ({ title }) => {
       >
         <h2 className="text-center">แบบคำร้องขอใบรับรองความประพฤติ</h2>
 
-        <Form.Item name="a" label="เรียน">
+        <Form.Item name="dear" label="เรียน">
           <Radio.Group>
             <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
             <Radio value="11">คณบดี</Radio>
@@ -155,12 +155,25 @@ const DocumentFourteenForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
+
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
         <Row gutter={[6]}>
           <Form.Item name="lveducation" label="ระดับการศึกษา">
             <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
+              <Radio value={10}>ปวช.</Radio>
+              <Radio value={11}>ปวส.</Radio>
+              <Radio value={12}>ปริญญาตรี</Radio>
+              <Radio value={13}>ปริญญาโท</Radio>
+              <Radio value={14}>ปริญญาเอก</Radio>
             </Radio.Group>
           </Form.Item>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -178,9 +191,40 @@ const DocumentFourteenForm = ({ title }) => {
           </Col>
         </Row>
 
+        <Row gutter={[10]}>
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            label="ชั้นปี"
+            name="classyear"
+            rules={[{ required: true, message: "กรุณากรอกชั้นปีที่เรียน" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="ระยะเวลาที่ศึกษา"
+            name="timestudy"
+            rules={[
+              {
+                required: true,
+                message: "กรุณากรอกระยะเวลาที่ศึกษาตามหลักสูตรที่เรียน",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Row>
+
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item
-            label="มีความประสงค์ขอใบรับรองความประพฤติ เพื่อนำไปใช้(โปรดระบุเหตุผล)"
+            label="มีความประสงค์ขอใบรับรองความประพฤติ เพื่อนำไปใช้(โปรดระบุ)"
             name="behavioralreceipt"
             rules={[
               { required: true, message: "กรุณากรอกเหตุผลที่ต้องการดำเนินการ" },

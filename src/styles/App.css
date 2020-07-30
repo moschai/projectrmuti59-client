@@ -1,0 +1,15 @@
+.FontThick {
+  font-weight: bold;
+  font-size: medium;
+  white-space: nowrap;
+}
+.FontSize {
+  font-size: medium;
+}
+.FontNowrap {
+  white-space: nowrap;
+}
+.blackground {
+  padding: 30px;
+  background: #ececec;
+}

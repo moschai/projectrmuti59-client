@@ -9,6 +9,7 @@ import {
   Select,
   Modal,
   Divider,
+  Checkbox,
   message,
   AutoComplete,
 } from "antd";
@@ -29,6 +30,7 @@ const DocumentNineForm = ({ title }) => {
   const [form] = Form.useForm();
   const rules = [{ required: true, message: "กรุณาระบุ" }];
   const { setFieldsValue } = form;
+  const [showotherdocument, setShowotherdocument] = useState(false);
 
   const [value, setValue] = useState("");
   const [options, setOptions] = useState([]);
@@ -136,12 +138,25 @@ const DocumentNineForm = ({ title }) => {
       >
         <h2 className="text-center">แบบคำร้องขอชำระเงินล่าช้า</h2>
 
+        <Form.Item name="dear" label="เรียน">
+          <Radio.Group>
+            <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
+            <Radio value="11">คณบดี</Radio>
+            <Radio value="12">คณะวิศวกรรมศาสตร์</Radio>
+            <Radio value="13">คณะครุศาสตร์อุตสาหกรรม</Radio>
+            <Radio value="14">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio>
+          </Radio.Group>
+        </Form.Item>
+
         <Row gutter={[8]}>
-          <Form.Item name="lastepaymentterm" label="ภาคเรียนที่">
+          <Form.Item
+            name="lastepaymentterm"
+            label="คำร้องชำระเงินล่าช้า ภาคเรียนที่"
+          >
             <Radio.Group>
-              <Radio value="10">1</Radio>
-              <Radio value="11">2</Radio>
-              <Radio value="12">3</Radio>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -157,12 +172,37 @@ const DocumentNineForm = ({ title }) => {
         <Row gutter={[8]}>
           <Form.Item name="topic" label="เรื่อง">
             <Radio.Group>
-              <Radio value="10">ค่าลงทะเบียนเรียนนรายวิชา</Radio>
-              <Radio value="11">ค่าธรรมเนียมการเพิ่มรายวิชา</Radio>
-              <Radio value="12">ค่าธรรมเนียมการถอนรายวิชา</Radio>
+              <Radio value="10">ค่าลงทะเบียนรายวิชา</Radio>
+              <Radio value="11">ค่าลาพัก/รักษาสถานภาพ</Radio>
+              <Radio value="12">ค่าเพิ่มรายวิชา</Radio>
+              <Radio value="13">ค่าถอนรายวิชา</Radio>
             </Radio.Group>
           </Form.Item>
         </Row>
+
+        <div style={{ paddingLeft: 10 }}>
+          <Form.Item name="otherdocument" label="(ในกรณีอื่นๆ)">
+            <Checkbox
+              onChange={(e) => {
+                setShowotherdocument(e.target.checked);
+              }}
+            />
+          </Form.Item>
+
+          {showotherdocument && (
+            <div style={{ paddingLeft: 15 }}>
+              <Form.Item
+                style={{ marginLeft: 5 }}
+                name="othermassege"
+                className="ml-3"
+                rules={[{ required: true, message: "ระบุ" }]}
+              >
+                <Input />
+              </Form.Item>
+            </div>
+          )}
+        </div>
+        <Divider />
 
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -206,15 +246,28 @@ const DocumentNineForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={[6]}>
-          <Form.Item name="lveducation" label="ระดับการศึกษา">
-            <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
-            </Radio.Group>
-          </Form.Item>
 
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
+        <Form.Item name="lveducation" label="ระดับการศึกษา">
+          <Radio.Group>
+            <Radio value={10}>ปวช.</Radio>
+            <Radio value={11}>ปวส.</Radio>
+            <Radio value={12}>ปริญญาตรี</Radio>
+            <Radio value={13}>ปริญญาโท</Radio>
+            <Radio value={14}>ปริญญาเอก</Radio>
+          </Radio.Group>
+        </Form.Item>
+
+        <Row gutter={[6]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
               label="สาขาวิชา"
@@ -230,26 +283,35 @@ const DocumentNineForm = ({ title }) => {
           </Col>
         </Row>
 
-        <Form.Item name="faculty" label="คณะ">
-          <Radio.Group defaultValue="11">
-            {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
-            <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
-            {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
-          </Radio.Group>
-        </Form.Item>
+        <Row gutter={[10]}>
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
+            </Radio.Group>
+          </Form.Item>
 
-        <Row gutter={[8]}>
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="มีความประสงค์ขอชำระเงินล่าช้า (เนื่องจากโปรดระบุ)"
-              name="latepaymentsince"
-              rules={[
-                { required: true, message: "กรุณากรอกเหตุผลที่ต้องดำเนินการ" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
+          <Form.Item
+            label="ชั้นปี"
+            name="classyear"
+            rules={[{ required: true, message: "กรุณากรอกชั้นปีที่เรียน" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="ระยะเวลาที่ศึกษา"
+            name="timestudy"
+            rules={[
+              {
+                required: true,
+                message: "กรุณากรอกระยะเวลาที่ศึกษาตามหลักสูตรที่เรียน",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
         </Row>
 
         <Col xs={24} sm={24} md={12} span={12}>
@@ -267,9 +329,9 @@ const DocumentNineForm = ({ title }) => {
         <Row gutter={[8]}>
           <Form.Item name="lastepaymentterm" label="ภาคเรียนที่">
             <Radio.Group>
-              <Radio value="10">1</Radio>
-              <Radio value="11">2</Radio>
-              <Radio value="12">3</Radio>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
             </Radio.Group>
           </Form.Item>
 

@@ -143,15 +143,28 @@ const DocumentTwelveForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={[6]}>
-          <Form.Item name="lveducation" label="ระดับการศึกษา">
-            <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
-            </Radio.Group>
-          </Form.Item>
 
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
+        <Form.Item name="lveducation" label="ระดับการศึกษา">
+          <Radio.Group>
+            <Radio value={10}>ปวช.</Radio>
+            <Radio value={11}>ปวส.</Radio>
+            <Radio value={12}>ปริญญาตรี</Radio>
+            <Radio value={13}>ปริญญาโท</Radio>
+            <Radio value={14}>ปริญญาเอก</Radio>
+          </Radio.Group>
+        </Form.Item>
+
+        <Row gutter={[6]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
               label="สาขาวิชา"
@@ -165,15 +178,49 @@ const DocumentTwelveForm = ({ title }) => {
               </Select>
             </Form.Item>
           </Col>
+
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
+            </Radio.Group>
+          </Form.Item>
         </Row>
 
-        <Form.Item name="faculty" label="คณะ">
-          <Radio.Group defaultValue="11">
-            {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
-            <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
-            {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
-          </Radio.Group>
-        </Form.Item>
+        <Row gutter={[8]}>
+          <Form.Item
+            label="เกิดวันที่"
+            name="dayborn"
+            rules={[{ required: true, message: "กรุณากรอกวันที่เกิด" }]}
+          >
+            <Input placeholder="ตัวอย่างเช่น 12" />
+          </Form.Item>
+
+          <Form.Item
+            label="เดือนที่เกิด"
+            name="monthborn"
+            rules={[{ required: true, message: "กรุณากรอกเดือนที่เกิด" }]}
+          >
+            <Input placeholder="ตัวอย่างเช่น สิงหาคม" />
+          </Form.Item>
+
+          <Form.Item
+            label="ปี พ.ศ.ที่เกิด"
+            name="yearborn"
+            rules={[{ required: true, message: "กรุณากรอกปี พ.ศ.ที่เกิด" }]}
+          >
+            <Input placeholder="ตัวอย่างเช่น 2537" />
+          </Form.Item>
+
+          <Form.Item
+            label="อายุ"
+            name="ageborn"
+            rules={[{ required: true, message: "กรุณากรอกอายุ" }]}
+          >
+            <Input placeholder="ตัวอย่างเช่น 26" />
+          </Form.Item>
+        </Row>
 
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item

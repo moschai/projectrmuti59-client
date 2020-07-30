@@ -15,6 +15,18 @@ class DocumentTen {
       throw new Error(error);
     }
   }
+
+  async getDocumentTenByDocumentId(documentId) {
+    try {
+      const response = await axios.get(
+        `${endpointUrl}${this._prefix}/document/${documentId}`
+      );
+      console.log(documentId, response);
+      return response.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }
 
 const DocumentTenService = new DocumentTen();

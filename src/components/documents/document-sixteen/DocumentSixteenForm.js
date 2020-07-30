@@ -102,12 +102,22 @@ const DocumentSixteenForm = ({ title }) => {
       >
         <h2 className="text-center">แบบคำร้องขอสำเร็จการรศึกษาล่าช้า </h2>
 
+        <Form.Item name="dear" label="เรียน">
+          <Radio.Group>
+            <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
+            <Radio value="11">คณบดี</Radio>
+            <Radio value="12">คณะวิศวกรรมศาสตร์</Radio>
+            <Radio value="13">คณะครุศาสตร์อุตสาหกรรม</Radio>
+            <Radio value="14">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio>
+          </Radio.Group>
+        </Form.Item>
+
         <Row gutter={[8]}>
           <Form.Item name="delaygraduationterm" label="ภาคเรียนที่">
             <Radio.Group>
-              <Radio value="10">1</Radio>
-              <Radio value="11">2</Radio>
-              <Radio value="12">3</Radio>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -119,16 +129,6 @@ const DocumentSixteenForm = ({ title }) => {
             <Input />
           </Form.Item>
         </Row>
-
-        <Form.Item name="a" label="เรียน">
-          <Radio.Group>
-            <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
-            <Radio value="11">คณบดี</Radio>
-            <Radio value="12">คณะวิศวกรรมศาสตร์</Radio>
-            <Radio value="13">คณะครุศาสตร์อุตสาหกรรม</Radio>
-            <Radio value="14">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio>
-          </Radio.Group>
-        </Form.Item>
 
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -172,13 +172,25 @@ const DocumentSixteenForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
+
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
         <Row gutter={[6]}>
           <Form.Item name="lveducation" label="ระดับการศึกษา">
             <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
-              <Radio value="13">ป.เอก</Radio>
+              <Radio value={10}>ปวช.</Radio>
+              <Radio value={11}>ปวส.</Radio>
+              <Radio value={12}>ปริญญาตรี</Radio>
+              <Radio value={13}>ปริญญาโท</Radio>
+              <Radio value={14}>ปริญญาเอก</Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -188,12 +200,24 @@ const DocumentSixteenForm = ({ title }) => {
               name="name_major"
               rules={[{ required: true, message: "กรุณากรอกสาขาวิชา" }]}
             >
-              <Input />
+              <Select placeholder="เลือกสาขาวิชา" onChange={onMajorChange}>
+                {majors.map((major) => (
+                  <Option value={major.id_major}>{major.name_major}</Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
         </Row>
 
         <Row gutter={[10]}>
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
+            </Radio.Group>
+          </Form.Item>
+
           <Form.Item
             label="ชั้นปี"
             name="classyear"
@@ -214,22 +238,7 @@ const DocumentSixteenForm = ({ title }) => {
           >
             <Input />
           </Form.Item>
-
-          <Form.Item name="typestudy" label="ภาค">
-            <Radio.Group>
-              <Radio value="10">ปกติ</Radio>
-              <Radio value="11">สมทบ</Radio>
-              <Radio value="12">พิเศษ</Radio>
-            </Radio.Group>
-          </Form.Item>
         </Row>
-        <Form.Item name="faculty" label="คณะ">
-          <Radio.Group defaultValue="11">
-            {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
-            <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
-            {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
-          </Radio.Group>
-        </Form.Item>
 
         <Row gutter={[8]}>
           <Form.Item
@@ -237,9 +246,9 @@ const DocumentSixteenForm = ({ title }) => {
             label="มีความประสงค์ขอสำเร็จการศึกษาล่าช้า ภาคเรียนที่"
           >
             <Radio.Group>
-              <Radio value="10">1</Radio>
-              <Radio value="11">2</Radio>
-              <Radio value="12">3</Radio>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -252,15 +261,17 @@ const DocumentSixteenForm = ({ title }) => {
           </Form.Item>
         </Row>
 
-        <Form.Item
-          label="เนื่องจาก (โปรดระบุ)"
-          name="delaygraduationsince"
-          rules={[
-            { required: true, message: "กรุณากรอกเหตุผลที่ต้องดำเนินการ" },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="เนื่องจาก"
+            name="since"
+            rules={[
+              { required: true, message: "กรุณากรอกเหตุผลที่ต้องการดำเนินการ" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
 
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item

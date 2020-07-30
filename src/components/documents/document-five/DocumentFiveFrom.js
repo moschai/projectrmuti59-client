@@ -111,7 +111,7 @@ const DocumentFiveForm = ({ title }) => {
           </Radio.Group>
         </Form.Item>
 
-        <Form.Item name="a" label="เรียน">
+        <Form.Item name="dear" label="เรียน">
           <Radio.Group>
             <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
             <Radio value="11">คณบดี</Radio>
@@ -163,15 +163,28 @@ const DocumentFiveForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={[6]}>
-          <Form.Item name="lveducation" label="ระดับการศึกษา">
-            <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
-            </Radio.Group>
-          </Form.Item>
 
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
+        <Form.Item name="lveducation" label="ระดับการศึกษา">
+          <Radio.Group>
+            <Radio value={10}>ปวช.</Radio>
+            <Radio value={11}>ปวส.</Radio>
+            <Radio value={12}>ปริญญาตรี</Radio>
+            <Radio value={13}>ปริญญาโท</Radio>
+            <Radio value={14}>ปริญญาเอก</Radio>
+          </Radio.Group>
+        </Form.Item>
+
+        <Row gutter={[6]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
               label="สาขาวิชา"
@@ -185,6 +198,22 @@ const DocumentFiveForm = ({ title }) => {
               </Select>
             </Form.Item>
           </Col>
+
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            label="เกรดเฉลี่ยนสะสม"
+            name="cumulativeGpa"
+            rules={[{ required: true, message: "กรุณากรอกเกรดเฉลี่ยสะสม" }]}
+          >
+            <Input />
+          </Form.Item>
         </Row>
 
         <Form.Item name="maintaintake" label="มีความประสงค์">
@@ -197,9 +226,9 @@ const DocumentFiveForm = ({ title }) => {
         <Row gutter={[6]}>
           <Form.Item name="takeleaveterm" label="ในภาคการศึกษา">
             <Radio.Group>
-              <Radio value="10">1</Radio>
-              <Radio value="11">2</Radio>
-              <Radio value="12">3</Radio>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -211,20 +240,18 @@ const DocumentFiveForm = ({ title }) => {
             <Input />
           </Form.Item>
 
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="ซึ่งเป็นการขอลาพักการเรียนครั้งที่"
-              name="takeleaveno"
-              rules={[
-                {
-                  required: true,
-                  message: "กรุณากรอกจำนวนครั้งที่ขอลาพักการเรียน",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
+          <Form.Item
+            label="ครั้งที่"
+            name="takeleaveno"
+            rules={[
+              {
+                required: true,
+                message: "กรุณากรอกจำนวนครั้งที่ขอลาพักการเรียน",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
         </Row>
 
         <Col xs={24} sm={24} md={12} span={12}>

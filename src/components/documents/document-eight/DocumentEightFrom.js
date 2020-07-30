@@ -9,6 +9,7 @@ import {
   Select,
   Modal,
   Divider,
+  Checkbox,
   AutoComplete,
   message,
 } from "antd";
@@ -34,6 +35,7 @@ const DocumentEightForm = ({ title }) => {
   const [form] = Form.useForm();
   const rules = [{ required: true, message: "กรุณาระบุ" }];
   const { setFieldsValue } = form;
+  const [showotherdocument, setShowotherdocument] = useState(false);
 
   const [value, setValue] = useState("");
   const [options, setOptions] = useState([]);
@@ -141,18 +143,21 @@ const DocumentEightForm = ({ title }) => {
       >
         <h2 className="text-center">แบบคำร้องขอย้ายกลุ่มเรียน</h2>
 
-        <Row gutter={[8]}>
-          <Form.Item name="movinggroupterm" label="ภาคเรียนที่">
+        <Row gutter={[6]}>
+          <Form.Item
+            name="termstudy"
+            label="คำร้องขอย้ายกลุ่มเรียน(รายวิชาที่ลงทะเบียน) ภาคเรียนที่"
+          >
             <Radio.Group>
-              <Radio value="10">1</Radio>
-              <Radio value="11">2</Radio>
-              <Radio value="12">3</Radio>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
             </Radio.Group>
           </Form.Item>
 
           <Form.Item
             label="ปีการศึกษา"
-            name="movinggroupyear"
+            name="yearstudy"
             rules={[{ required: true, message: "กรุณากรอกปีการศึกษา" }]}
           >
             <Input />
@@ -201,15 +206,28 @@ const DocumentEightForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={[6]}>
-          <Form.Item name="lveducation" label="ระดับการศึกษา">
-            <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
-            </Radio.Group>
-          </Form.Item>
 
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
+        <Form.Item name="lveducation" label="ระดับการศึกษา">
+          <Radio.Group>
+            <Radio value={10}>ปวช.</Radio>
+            <Radio value={11}>ปวส.</Radio>
+            <Radio value={12}>ปริญญาตรี</Radio>
+            <Radio value={13}>ปริญญาโท</Radio>
+            <Radio value={14}>ปริญญาเอก</Radio>
+          </Radio.Group>
+        </Form.Item>
+
+        <Row gutter={[6]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
               label="สาขาวิชา"
@@ -223,19 +241,92 @@ const DocumentEightForm = ({ title }) => {
               </Select>
             </Form.Item>
           </Col>
+
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10" disabled>คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12" disabled>คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
+            </Radio.Group>
+          </Form.Item>
         </Row>
 
-        <Col xs={24} sm={24} md={12} span={12}>
+        <Row gutter={[10]}>
           <Form.Item
-            label="มีความประสงค์ขอย้ากลุ่มเรียน เนื่องจาก(โปรดระบุ)"
-            name="movinggroupsince"
+            label="ชั้นปี"
+            name="classyear"
+            rules={[{ required: true, message: "กรุณากรอกชั้นปีที่เรียน" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="ระยะเวลาที่ศึกษา"
+            name="timestudy"
             rules={[
-              { required: true, message: "กรุณากรอกเหตุผลที่ต้องการดำเนินการ" },
+              {
+                required: true,
+                message: "กรุณากรอกระยะเวลาที่ศึกษาตามหลักสูตรที่เรียน",
+              },
             ]}
           >
             <Input />
           </Form.Item>
-        </Col>
+        </Row>
+
+        <Row gutter={[8]}>
+          <Form.Item
+            name="movinggroupterm"
+            label="มีความประสงค์ : ขอเปลี่ยนกลุ่มเรียน ภาคเรียนที่"
+          >
+            <Radio.Group>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            label="ปีการศึกษา"
+            name="movinggroupyear"
+            rules={[{ required: true, message: "กรุณากรอกปีการศึกษา" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Row>
+
+        <Row gutter={[6]}>
+          <Form.Item name="since" label="(โปรดระบุเหตุผลการเปลี่ยนกลุ่มเรียน)">
+            <Radio.Group>
+              <Radio value="1">ตารางเรียนซ้อนกัน</Radio>
+              <Radio value="2">คณะประกาศปิดกลุ่มเรียนเดิม</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </Row>
+
+        <div style={{ paddingLeft: 10 }}>
+          <Form.Item name="otherdocument" label="(ในกรณีอื่นๆ)">
+            <Checkbox
+              onChange={(e) => {
+                setShowotherdocument(e.target.checked);
+              }}
+            />
+          </Form.Item>
+
+          {showotherdocument && (
+            <div style={{ paddingLeft: 15 }}>
+              <Form.Item
+                style={{ marginLeft: 5 }}
+                name="othermassege"
+                className="ml-3"
+                rules={[{ required: true, message: "ระบุ" }]}
+              >
+                <Input />
+              </Form.Item>
+            </div>
+          )}
+        </div>
+        <Divider />
 
         <Form.List name="tables">
           {(fields, { add, remove }) => {
@@ -333,8 +424,8 @@ const DocumentEightForm = ({ title }) => {
                       </Col>
                       <Col>
                         <Form.Item
-                          name={[field.name, "advisor"]}
-                          fieldKey={[field.fieldKey, "advisor"]}
+                          name={[field.name, "advisorr"]}
+                          fieldKey={[field.fieldKey, "advisorr"]}
                           rules={rules}
                         >
                           <Select placeholder="ระบุอาจารย์ประจำวิชา">
@@ -401,12 +492,17 @@ const DocumentEightForm = ({ title }) => {
         </Col>
 
         <Divider />
-        <h4>สาขาวิชาที่นักศึกษาสังกัด</h4>
+
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item
-            label="อาจารย์ที่ปรึกษา"
+            label="อาจารย์ผู้สอนกลุ่มเรียนเดิม"
             name="advisor_id"
-            rules={[{ required: true, message: "กรุณาระบุอาจารย์ที่ปรึกษา" }]}
+            rules={[
+              {
+                required: true,
+                message: "กรุณาระบุอาจารย์ผู้สอนกลุ่มเรียนเดิม",
+              },
+            ]}
           >
             <Select placeholder="กรุณาระบุอาจารย์ที่ปรึกษา">
               {authoritys
@@ -426,9 +522,14 @@ const DocumentEightForm = ({ title }) => {
         </Col>
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item
-            label="หัวหน้าสาขา"
+            label="อาจารย์ผู้สอนกลุ่มเรียนกลุ่มเรียนใหม่"
             name="mastersubject_id"
-            rules={[{ required: true, message: "กรุณาระบุหัวหน้าสาขา" }]}
+            rules={[
+              {
+                required: true,
+                message: "กรุณาระบุอาจารย์ผู้สอนกลุ่มเรียนใหม่",
+              },
+            ]}
           >
             <Select placeholder="กรุณาระบุหัวหน้าสาขา">
               {authoritys
