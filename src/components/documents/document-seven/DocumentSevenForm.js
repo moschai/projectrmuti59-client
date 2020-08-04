@@ -139,18 +139,8 @@ const DocumentSevenForm = ({ title }) => {
           tables: [{ id_subject: "", namesubject: "" }],
         }}
       >
-        <h2 className="text-center">แบบคำร้องขอถอนรายวิชาล่าช้า</h2>
-        <Row gutter={[8]}>
-          <Form.Item name="a" label="เรียน">
-            <Radio.Group>
-              <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
-              <Radio value="11">คณบดี</Radio>
-              <Radio value="12">คณะวิศวกรรมศาสตร์</Radio>
-              <Radio value="13">คณะครุศาสตร์อุตสาหกรรม</Radio>
-              <Radio value="14">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio>
-            </Radio.Group>
-          </Form.Item>
-        </Row>
+        <h2 className="text-center">แบบคำร้องขอลงทะเบียนเรียน</h2>
+
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
@@ -207,9 +197,11 @@ const DocumentSevenForm = ({ title }) => {
         <Row gutter={[6]}>
           <Form.Item name="lveducation" label="ระดับการศึกษา">
             <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
+              <Radio value={10}>ปวช.</Radio>
+              <Radio value={11}>ปวส.</Radio>
+              <Radio value={12}>ปริญญาตรี</Radio>
+              <Radio value={13}>ปริญญาโท</Radio>
+              <Radio value={14}>ปริญญาเอก</Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -228,12 +220,46 @@ const DocumentSevenForm = ({ title }) => {
           </Col>
         </Row>
 
+        <Row gutter={[10]}>
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10">คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            label="ชั้นปี"
+            name="classyear"
+            rules={[{ required: true, message: "กรุณากรอกชั้นปีที่เรียน" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="ระยะเวลาที่ศึกษา"
+            name="timestudy"
+            rules={[
+              {
+                required: true,
+                message: "กรุณากรอกระยะเวลาที่ศึกษาตามหลักสูตรที่เรียน",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Row>
+
         <Row gutter={[6]}>
-          <Form.Item name="termregister" label="ได้ลงทะเบียนเรียนภาคเรียนที่">
+          <Form.Item
+            name="termregister"
+            label="มีความประสงค์ขอลงทะเบียนเรียนในภาคการศึกษาที่"
+          >
             <Radio.Group>
-              <Radio value="10">1</Radio>
-              <Radio value="11">2</Radio>
-              <Radio value="12">3</Radio>
+              <Radio value="1">1</Radio>
+              <Radio value="2">2</Radio>
+              <Radio value="3">3</Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -244,44 +270,9 @@ const DocumentSevenForm = ({ title }) => {
           >
             <Input />
           </Form.Item>
-
-          <Form.Item
-            label="จำนวนทั้งสิ้น(หน่วยกิต)"
-            name="termtotalunit"
-            rules={[{ required: true, message: "กรุณากรอกปีการศึกษา" }]}
-          >
-            <Input />
-          </Form.Item>
         </Row>
 
-        <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="มีความประสงค์ขอถอนรายวิช้า(จำนนวนหนน่วยกิต)"
-            name="withdrawregisterunit"
-            rules={[
-              { required: true, message: "กรุณากรอกเหตุผลที่ต้องการดำเนินการ" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-        </Col>
-
-        <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="โดยคงเหลือหน่วยกิตในภาคเรียนนี้(จำนนวนหนน่วยกิต)"
-            name="remainunit"
-            rules={[
-              { required: true, message: "กรุณากรอกเหตุผลที่ต้องการดำเนินการ" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-        </Col>
-
-        <label>
-          รายละเอียดวิชาดังนี้
-          (กรณีวิชาที่คงเหลือต่ำกว่าเกณฑ์ที่กำหนดต้องยื่นคำร้องขอลงทะเบียนเรียนต่ำกว่าเกณฑ์ที่กำหนด)
-        </label>
+        <label>รายละเอียดวิชาดังนี้</label>
         <Form.List name="tables">
           {(fields, { add, remove }) => {
             return (
@@ -356,10 +347,19 @@ const DocumentSevenForm = ({ title }) => {
                           <Input placeholder="หน่วยกิต" disabled />
                         </Form.Item>
                       </Col>
-                      {/* <Col>
+                      <Col>
                         <Form.Item
-                          name={[field.name, "advisor_id"]}
-                          fieldKey={[field.fieldKey, "advisor_id"]}
+                          name={[field.name, "groupstudy"]}
+                          fieldKey={[field.fieldKey, "groupstudy"]}
+                          rules={rules}
+                        >
+                          <Input placeholder="กลุ่มเรียน" />
+                        </Form.Item>
+                      </Col>
+                      <Col>
+                        <Form.Item
+                          name={[field.name, "advisor"]}
+                          fieldKey={[field.fieldKey, "advisor"]}
                           rules={rules}
                         >
                           <Select placeholder="ระบุอาจารย์ประจำวิชา">
@@ -371,13 +371,13 @@ const DocumentSevenForm = ({ title }) => {
                             ))}
                           </Select>
                         </Form.Item>
-                      </Col> */}
+                      </Col>
                       <Col>
                         <Form.Item
-                          name={[field.name, "note"]}
-                          fieldKey={[field.fieldKey, "note"]}
+                          name={[field.name, "statusg"]}
+                          fieldKey={[field.fieldKey, "statusg"]}
                         >
-                          <Input placeholder="หมายเหตุ" />
+                          <Input placeholder="สถานะวิชา(W,F,D)" />
                         </Form.Item>
                       </Col>
                       {fields.length > 1 && (
@@ -428,28 +428,6 @@ const DocumentSevenForm = ({ title }) => {
             rules={[{ required: true, message: "กรุณาระบุอาจารย์ที่ปรึกษา" }]}
           >
             <Select placeholder="กรุณาระบุอาจารย์ที่ปรึกษา">
-              {authoritys
-                .filter((authority) => {
-                  if (!authority.major) {
-                    return false;
-                  }
-                  return authority.major.id_major === selectMajor;
-                })
-                .map((authority) => (
-                  <Option value={authority.id_authority}>
-                    {authority.name_authority} {authority.surname_authority}
-                  </Option>
-                ))}
-            </Select>
-          </Form.Item>
-        </Col>
-        <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="หัวหน้าสาขา"
-            name="mastersubject_id"
-            rules={[{ required: true, message: "กรุณาระบุหัวหน้าสาขา" }]}
-          >
-            <Select placeholder="กรุณาระบุหัวหน้าสาขา">
               {authoritys
                 .filter((authority) => {
                   if (!authority.major) {

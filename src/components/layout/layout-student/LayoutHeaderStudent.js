@@ -40,8 +40,10 @@ function LayoutHeaderStudent({ history }) {
           <Menu.Item key="maintainstatus">
             คำร้องขอลาพักการเรียน/รักษาสภาพเพื่อรอสำเร็จการศึกษา
           </Menu.Item>
-          <Menu.Item key="adddelay">แบบคำร้องขอลงทะเบียนเพิ่มล่าช้า</Menu.Item>
-          <Menu.Item key="withdrawdelay">แบบคำร้องขอถอนรายวิชาล่าช้า</Menu.Item>
+          <Menu.Item key="adddelay">
+            แบบคำร้องขอลงทะเบียนเพิ่ม/ถอนรายวิชาล่าช้า
+          </Menu.Item>
+          <Menu.Item key="withdrawdelay">แบบคำร้องขอลงทะเบียนเรียน</Menu.Item>
           <Menu.Item key="grouptransfer">แบบคำร้องขอย้ายกลุ่มเรียนน</Menu.Item>
           <Menu.Item key="latepayment">แบบคำร้องขอชำระเงินล่าช้า</Menu.Item>
           <Menu.Item key="coursecomparison">

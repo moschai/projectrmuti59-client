@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import DocumentOneService from "../../../services/DocumentOneService";
-import { Spin } from "antd";
+import { Spin, Button } from "antd";
 import { Card, Col, Row } from "antd";
 import "../../../styles/App.css";
 import { lveducationNumberToString } from "../../../helpers/lveducation";
 import { dearNumberToString } from "../../../helpers/dear";
+import ApproveModal from "../../approve/ApproveModal";
 
 const ApprovedDocOne = ({ documentId }) => {
   const [isLoading, setLoading] = useState(true);
   const [document, setDocument] = useState({});
+  const [isOpen, setOpen] = useState(false);
   useEffect(() => {
     getDocumentOne();
   }, []);
@@ -26,13 +28,23 @@ const ApprovedDocOne = ({ documentId }) => {
 
     setLoading(false);
   };
+
+  const handleAppove = () => {
+    setOpen(true);
+  };
   if (isLoading) {
     return <Spin tip="loading..." />;
   } else {
     return (
       <div className="blackground">
+        <ApproveModal
+          isOpen={isOpen}
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
         <Row gutter={16}>
-          <Col span={8}>
+          <Col xs={24} sm={24} md={24} lg={8}>
             <Card title="ใบคำร้องทั่วไป " bordered={false}>
               <span className="FontThick">เรียน : </span>
               <span className="FontSize">
@@ -46,7 +58,7 @@ const ApprovedDocOne = ({ documentId }) => {
               <span className="FontSize">{document.type_one.purpose}</span>
             </Card>
           </Col>
-          <Col span={16}>
+          <Col xs={24} sm={24} md={24} lg={16}>
             <Card title="" bordered={false}>
               <span className="FontThick">ชื่อ-นามสกุล : </span>
               <span className="FontSize">
@@ -92,6 +104,9 @@ const ApprovedDocOne = ({ documentId }) => {
               <br />
               <span className="FontThick">E-mail : </span>
               <span className="FontSize">{document.student.email_std}</span>
+              <Row justify="end">
+                <Button onClick={handleAppove}>อนุมัติ</Button>
+              </Row>
             </Card>
           </Col>
           {/* <Col span={8}>

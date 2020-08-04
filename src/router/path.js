@@ -18,7 +18,7 @@ export const appPath = {
   documentFourteen: "/behaviorcertify",
   documentFifteen: "/graduation",
   documentSixteen: "/soccessdelay",
-  documentSeventeen: "/requestmoreseats",
+  documentSeventeen: "/document-seventeen",
   documentEighteen: "/document-eighteen",
 
   authority: {

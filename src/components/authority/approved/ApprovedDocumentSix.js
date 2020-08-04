@@ -125,5 +125,4 @@ const ApprovedDocSix = ({ documentId }) => {
     );
   }
 };
-
 export default ApprovedDocSix;

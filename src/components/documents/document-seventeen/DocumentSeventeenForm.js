@@ -141,7 +141,9 @@ const DocumentSeventeenForm = ({ title }) => {
           tables: [{ id_subject: "", namesubject: "" }],
         }}
       >
-        <h2 className="text-center">แบบคำร้องขอเพิ่มที่นั่ง</h2>
+        <h2 className="text-center">
+          แบบคำร้องแก้ไขหมวดวิชาตามโครงสร้างหลักสูตร
+        </h2>
 
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -185,15 +187,28 @@ const DocumentSeventeenForm = ({ title }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={[6]}>
-          <Form.Item name="lveducation" label="ระดับการศึกษา">
-            <Radio.Group>
-              <Radio value="10">ปวส.</Radio>
-              <Radio value="11">ป.ตรี</Radio>
-              <Radio value="12">ป.โทร</Radio>
-            </Radio.Group>
-          </Form.Item>
 
+        <Col xs={24} sm={24} md={12} span={12}>
+          <Form.Item
+            label="อีเมลล์(E-mail)"
+            name="email_std"
+            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+
+        <Form.Item name="lveducation" label="ระดับการศึกษา">
+          <Radio.Group>
+            <Radio value={10}>ปวช.</Radio>
+            <Radio value={11}>ปวส.</Radio>
+            <Radio value={12}>ปริญญาตรี</Radio>
+            <Radio value={13}>ปริญญาโท</Radio>
+            <Radio value={14}>ปริญญาเอก</Radio>
+          </Radio.Group>
+        </Form.Item>
+
+        <Row gutter={[6]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
               label="สาขาวิชา"
@@ -207,116 +222,17 @@ const DocumentSeventeenForm = ({ title }) => {
               </Select>
             </Form.Item>
           </Col>
-        </Row>
 
-        <Row gutter={[6]}>
-          <Form.Item name="termregister" label="ได้ลงทะเบียนเรียนประจำภาคเรียน">
-            <Radio.Group>
-              <Radio value="10">1</Radio>
-              <Radio value="11">2</Radio>
-              <Radio value="12">3</Radio>
+          <Form.Item name="faculty" label="คณะ">
+            <Radio.Group defaultValue="11">
+              {/* <Radio  value="10">คณะวิศวกรรมศาสตร์</Radio>                       */}
+              <Radio value="11">คณะครุศาสตร์อุตสาหกรรม</Radio>
+              {/* <Radio value="12">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio> */}
             </Radio.Group>
           </Form.Item>
-
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="ปีการศึกษา"
-              name="yearregister"
-              rules={[{ required: true, message: "กรุณากรอกปีการศึกษา" }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
         </Row>
 
-        <Row gutter={[6]}>
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="มีความประสงค์ลงขอเพิ่มที่นั่ง(ในรหัสวิชา)"
-              name="idsubject"
-              rules={[{ required: true, message: "กรุณากรอกรหัสวิชา" }]}
-            >
-              <AutoComplete
-                style={{ width: 200, textAlign: "left" }}
-                options={options}
-                onSelect={(value) => {
-                  const subject = subjects.find(
-                    (subject) => subject.id_subject === value
-                  );
-                  console.log(subject);
-                  const namesubject = subject.name_subject;
-
-                  setFieldsValue({
-                    namesubject,
-                  });
-                }}
-                onSearch={onSearch}
-                placeholder="รหัสวิชา"
-              />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="ชื่อวิชา"
-              name="namesubject"
-              rules={[
-                {
-                  required: true,
-                  message: "กรุณากรอกชื่อวิชา",
-                },
-              ]}
-            >
-              <Input disabled />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="กลุ่มเรียน"
-              name="groupstudy"
-              rules={[
-                {
-                  required: true,
-                  message: "กรุณากรอกกลุ่มเรียน",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="ซึ่งในปัจจุบันมีนักศึกษาที่ลงทะเบียน(จำนวน)"
-              name="registernow"
-              rules={[
-                {
-                  required: true,
-                  message: "กรุณากรอกจำนวนนักเรียนที่ลงทะเบียนเรียนในปัจจุบัน",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="ยินดีให้นักศึกษาลงทะเบียนเพิ่มในรายวิชาและกลุ่มเรียนดังกล่าวได้อีก(จำนวน)"
-              name="registeradd"
-              rules={[
-                {
-                  required: true,
-                  message: "กรุณากรอกจำนวนนักศึกษาที่ขอเพิ่มที่นั่ง",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-
+        <label>รายละเอียดวิชาดังนี้</label>
         <Form.List name="tables">
           {(fields, { add, remove }) => {
             return (
@@ -329,8 +245,8 @@ const DocumentSeventeenForm = ({ title }) => {
                       </Col>
                       <Col>
                         <Form.Item
-                          name={[field.name, "idstudent"]}
-                          fieldKey={[field.fieldKey, "idstudent"]}
+                          name={[field.name, "subject"]}
+                          fieldKey={[field.fieldKey, "subject"]}
                           rules={rules}
                         >
                           {/* <Input
@@ -347,54 +263,70 @@ const DocumentSeventeenForm = ({ title }) => {
                               });
                             }}
                           /> */}
-                          <Input placeholder="รหัสนักศึกษา" />
+                          <AutoComplete
+                            style={{ width: 200, textAlign: "left" }}
+                            options={options}
+                            onSelect={(value) => {
+                              const subject = subjects.find(
+                                (subject) => subject.id_subject === value
+                              );
+                              const tables = form.getFieldValue(`tables`);
+
+                              if (tables[index]) {
+                                tables[index].namesubject =
+                                  subject.name_subject;
+                                tables[index].unit_subject =
+                                  subject.unit_subject;
+                              }
+                              console.log(tables);
+
+                              setFieldsValue({
+                                tables,
+                              });
+                            }}
+                            onSearch={onSearch}
+                            placeholder="รหัสวิชา"
+                          />
                         </Form.Item>
                       </Col>
                       <Col>
                         <Form.Item
-                          name={[field.name, "namestudent"]}
-                          fieldKey={[field.fieldKey, "namestudent"]}
+                          name={[field.name, "namesubject"]}
+                          fieldKey={[field.fieldKey, "namesubject"]}
                           rules={rules}
                         >
-                          <Input placeholder="ชื่อ" />
+                          <Input placeholder="ชื่อวิชา" disabled />
                         </Form.Item>
                       </Col>
                       <Col>
                         <Form.Item
-                          name={[field.name, "surnamestudent"]}
-                          fieldKey={[field.fieldKey, "surnamestudent"]}
+                          name={[field.name, "unit_subject"]}
+                          fieldKey={[field.fieldKey, "unit_subject"]}
                           rules={rules}
                         >
-                          <Input placeholder="นามสกุล" />
+                          <Input placeholder="หน่วยกิต" disabled />
                         </Form.Item>
                       </Col>
                       <Col>
                         <Form.Item
-                          name={[field.name, "namemajor"]}
-                          fieldKey={[field.fieldKey, "namemajor"]}
+                          name={[field.name, "groupsub"]}
+                          fieldKey={[field.fieldKey, "groupsub"]}
                           rules={rules}
                         >
-                          <Select
-                            placeholder="เลือกสาขาวิชา"
-                            onChange={onMajorChange}
-                          >
-                            {majors.map((major) => (
-                              <Option value={major.id_major}>
-                                {major.name_major}
-                              </Option>
-                            ))}
-                          </Select>
+                          <Input placeholder="หมวดวิชาเดิม" />
                         </Form.Item>
                       </Col>
 
                       <Col>
                         <Form.Item
-                          name={[field.name, "note"]}
-                          fieldKey={[field.fieldKey, "note"]}
+                          name={[field.name, "groupsubstruct"]}
+                          fieldKey={[field.fieldKey, "groupsubstruct"]}
+                          rules={rules}
                         >
-                          <Input placeholder="หมายเหตุ" />
+                          <Input placeholder="หมวดวิชาตามโครงสร้างหลักสูตร" />
                         </Form.Item>
                       </Col>
+
                       {fields.length > 1 && (
                         <Col flex="none">
                           <MinusCircleOutlined
@@ -424,66 +356,6 @@ const DocumentSeventeenForm = ({ title }) => {
           }}
         </Form.List>
 
-        <label>(กรณีเทียบเพื่อเรียนแทน)</label>
-
-        <Row gutter={[8]}>
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item label="รหัสวิชาเดิม" name="pastidsubject">
-              <AutoComplete
-                style={{ width: 200, textAlign: "left" }}
-                options={options}
-                onSelect={(value) => {
-                  const subject = subjects.find(
-                    (subject) => subject.id_subject === value
-                  );
-                  console.log(subject);
-                  const pastnamesubject = subject.name_subject;
-
-                  setFieldsValue({
-                    pastnamesubject,
-                  });
-                }}
-                onSearch={onSearch}
-                placeholder="รหัสวิชา"
-              />
-            </Form.Item>
-          </Col>
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item label="ชื่อวิชา" name="pastnamesubject">
-              <Input disabled />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={[8]}>
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item label="รหัสวิชาใหม่" name="newidsubject">
-              <AutoComplete
-                style={{ width: 200, textAlign: "left" }}
-                options={options}
-                onSelect={(value) => {
-                  const subject = subjects.find(
-                    (subject) => subject.id_subject === value
-                  );
-                  console.log(subject);
-                  const newnamesubject = subject.name_subject;
-
-                  setFieldsValue({
-                    newnamesubject,
-                  });
-                }}
-                onSearch={onSearch}
-                placeholder="รหัสวิชา"
-              />
-            </Form.Item>
-          </Col>
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item label="ชื่อวิชา" name="newnamesubject">
-              <Input disabled />
-            </Form.Item>
-          </Col>
-        </Row>
-
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item
             label="ลงชื่อนักศึกษา"
@@ -498,11 +370,11 @@ const DocumentSeventeenForm = ({ title }) => {
         <h4>สาขาวิชาที่นักศึกษาสังกัด</h4>
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item
-            label="อาจารย์ผู้สอน"
-            name="teacherteath_id"
+            label="อาจารย์ที่ปรึกษา"
+            name="advisor_id"
             rules={[{ required: true, message: "กรุณาระบุอาจารย์ที่ปรึกษา" }]}
           >
-            <Select placeholder="กรุณาระบุอาจารย์ผู้สอน">
+            <Select placeholder="กรุณาระบุอาจารย์ที่ปรึกษา">
               {authoritys
                 .filter((authority) => {
                   if (!authority.major) {
