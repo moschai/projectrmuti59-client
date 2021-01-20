@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
 import DocumentTwelveService from "../../../services/DocumentTwelveService";
-import { Spin } from "antd";
-import { Card, Col, Row } from "antd";
+import { endpointUrl } from "../../../config";
+import { Spin, Button, Divider, Avatar } from "antd";
+import { Card, Col, Row, Modal, Form, message } from "antd";
 import "../../../styles/App.css";
 import { lveducationNumberToString } from "../../../helpers/lveducation";
+import { useLocation, useHistory } from "react-router-dom";
+import { appPath } from "../../../router/path";
+import ApproveModal from "../../approve/ApproveModal";
 
 const ApprovedDocTwelve = ({ documentId }) => {
   const [isLoading, setLoading] = useState(true);
   const [document, setDocument] = useState({});
+  const [isOpen, setOpen] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [form] = Form.useForm();
+  const history = useHistory();
   useEffect(() => {
     getDocumentTwelve();
   }, []);
@@ -24,11 +32,55 @@ const ApprovedDocTwelve = ({ documentId }) => {
     }
     setLoading(false);
   };
+
+  const approvedDocumentTwelve = async (values) => {
+    setCreating(true);
+    try {
+      const documentApprovedTwelveResponse = await DocumentTwelveService.approvedDocumentTwelve(
+        values,
+        documentId
+      );
+      console.log(values);
+
+      Modal.success({
+        title: "อนุมัติแบบคำร้องสำเร็จ",
+
+        cancelText: false,
+      });
+      history.push(`${appPath.authority.root}${appPath.authority.document}`);
+
+      console.log(documentApprovedTwelveResponse);
+    } catch (error) {
+      console.error(error);
+      message.error("อนุมัติแบบคำร้องไม่สำเร็จ");
+    }
+    setCreating(false);
+    setOpen(false);
+  };
+
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+    approvedDocumentTwelve(values);
+  };
+
+  const handleAppove = () => {
+    setOpen(true);
+  };
   if (isLoading) {
     return <Spin tip="loading..." />;
   } else {
     return (
       <div className="blackground">
+        <ApproveModal
+          isOpen={isOpen}
+          finish={onFinish}
+          loading={creating}
+          setLoading={setCreating}
+          form={form}
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
         <Row gutter={16}>
           <Col span={14}>
             <Card title="ใบคำร้องขอลาออกจากการเป็นนักศึกษา" bordered={false}>
@@ -108,6 +160,106 @@ const ApprovedDocTwelve = ({ documentId }) => {
 
               <span className="FontThick">E-mail : </span>
               <span className="FontSize">{document.student.email_std}</span>
+
+              <Divider />
+              {document.number_sig > 0 && (
+                <div>
+                  <Divider />
+                  <div>
+                    ความคิดเห็นอาจารย์ที่ปรึกษา:{" "}
+                    {document.type_twelve.signature.advisor_comment}
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_twelve.signature.advisor_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    ความคิดเห็นหัวหน้าสาขาวิชา:{" "}
+                    {document.type_twelve.signature.mastersubject_comment}
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_twelve.signature.mastersubject_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    ความคิดเห็นหัวหน้างานบริการการศึกษา/หัวหน้าสำนักงานคณบดี:{" "}
+                    {
+                      document.type_twelve.signature
+                        .head_service_or_deanoffice_comment
+                    }
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_twelve.signature.head_service_or_deanoffice_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    ความคิดเห็นรองคณบดีฝ่ายวิชาการและวิจัย:{" "}
+                    {
+                      document.type_twelve.signature
+                        .deputy_dean_research_comment
+                    }
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_twelve.signature.deputy_dean_research_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    ความคิดของคณบดี:{" "}
+                    {document.type_twelve.signature.dean_comment}
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_twelve.signature.dean_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+                </div>
+              )}
+              <Row justify="end">
+                <Button
+                  onClick={handleAppove}
+                  loading={creating}
+                  disabled={creating}
+                >
+                  อนุมัติ
+                </Button>
+              </Row>
             </Card>
           </Col>
           {/* <Col span={8}>

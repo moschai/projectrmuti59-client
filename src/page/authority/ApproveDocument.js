@@ -17,6 +17,7 @@ import ApprovedDocThirteen from "../../components/authority/approved/ApprovedDoc
 import ApprovedDocFourteen from "../../components/authority/approved/ApprovedDocumentFourteen";
 import ApprovedDocFifteen from "../../components/authority/approved/ApprovedDocumentFifteen";
 import ApprovedDocSixteen from "../../components/authority/approved/ApprovedDocumentSixteen";
+import ApprovedDocSeventeen from "../../components/authority/approved/ApprovedDocumentSeventeen";
 
 const ApproveDocumentPage = () => {
   const { document } = useParams();
@@ -57,6 +58,8 @@ const ApproveDocumentPage = () => {
       return <ApprovedDocFifteen documentId={document} />;
     } else if (type === 16) {
       return <ApprovedDocSixteen documentId={document} />;
+    } else if (type === 17) {
+      return <ApprovedDocSeventeen documentId={document} />;
     }
     return <div>page</div>;
   };

@@ -6,6 +6,7 @@ class Authority {
   constructor() {
     this._prefix = "authority";
   }
+
   async getMajors() {
     try {
       const response = await axios.get(`${endpointUrl}${this._prefix}/major`);

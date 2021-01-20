@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Col, Row, message } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Col,
+  Row,
+  message,
+  Image,
+  Avatar,
+} from "antd";
 import { useHistory } from "react-router-dom";
 import AuthService from "../../services/AuthService";
 import Loading from "../../components/Loading";
@@ -48,55 +58,80 @@ const AuthorityLoginPage = () => {
   };
 
   return (
-    <Form
-      {...layout}
-      name="basic"
-      initialValues={{
-        remember: true,
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
       }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
     >
-      <Row gutter={[8]}>
-        <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+      <Form
+        {...layout}
+        style={{
+          minWidth: 400,
+          boxShadow: "0 11px 19px 0 rgba(0, 0, 0, 0.1)",
+          padding: 20,
+        }}
+        name="basic"
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+        <div className="text-center mt-3 mb-3">
+          <Avatar
+            src="/RMUTI_KORAT.png"
+            alt="logo"
+            style={{ width: 100, height: 170 }}
+          />
+        </div>
+        <Row justify="center">
+          <Col xs={24} sm={24} san={24}>
+            <Form.Item
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+              label="ชื่อผู้ใช้"
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: "กรุณาระบุชื่อผู้ใช้!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-        </Col>
-      </Row>
+            <Form.Item
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+              label="รหัสผ่าน"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "กรุณาระบุรหัสผ่าน!",
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+          </Col>
+        </Row>
 
-      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit" loading={isLoading}>
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        <Row justify="center">
+          <Col sm={24} xs={24} className="text-right">
+            <Form.Item {...tailLayout}>
+              <Button type="primary" htmlType="submit" loading={isLoading}>
+                เข้าสู่ระบบ
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+    </div>
   );
 };
 export default AuthorityLoginPage;

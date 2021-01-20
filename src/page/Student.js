@@ -1,16 +1,15 @@
-import React from 'react'
-import BaseLayoutStudent from '../components/layout/layout-student/BaseLayoutStudent'
-
+import React from "react";
+import { Avatar } from "antd";
+import BaseLayoutStudent from "../components/layout/layout-student/BaseLayoutStudent";
 
 export default function Student() {
-    return (
-       <BaseLayoutStudent>
-       ขั้นตอนการดำเนินการ <br />
-       เลือกใบคำร้องที่ต้องการดำเนินรายการ<br />
-       กรอกข้อมูลใบคำร้องที่ต้องการดำเนินการให้ครบถ้วน
-       กดยืนยันดำเนินการใบคำร้อง
-       ติดตามการดำเนินการได้จากรหัสใบคำร้อง
-       </BaseLayoutStudent>
-       
-    )
+  return (
+    <BaseLayoutStudent>
+      {/* <div className="blackground"></div> */}
+
+      <div className="text-center ">
+        <img src="/stdbk.png" style={{ width: 1111, height: 678 }} />
+      </div>
+    </BaseLayoutStudent>
+  );
 }

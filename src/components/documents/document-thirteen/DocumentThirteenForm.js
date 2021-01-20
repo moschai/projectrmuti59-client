@@ -177,6 +177,16 @@ const DocumentThirteenForm = ({ title }) => {
         cancelText: false,
       });
 
+      Modal.warning({
+        title: "คำเตือน โปรดอ่านและปฏิบัติตาม",
+        content: (
+          <span>
+            {" "}
+            ( โปรดจดจำรหัสใบคำร้องเพื่อใช้ในการติดตามสถานะใบคำร้องของท่าน
+            เมื่อกดปุ่ม OK)
+          </span>
+        ),
+      });
       console.log(documentThirteenResponse);
     } catch (error) {
       console.error(error);
@@ -214,7 +224,7 @@ const DocumentThirteenForm = ({ title }) => {
               name="name_std"
               rules={[{ required: true, message: "กรุณากรอกชื่อ" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น นายสติ นางสาวสติ" />
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -223,7 +233,7 @@ const DocumentThirteenForm = ({ title }) => {
               name="surname_std"
               rules={[{ required: true, message: "กรุณากรอกนามสกุล" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น สัมปชัญญะ" />
             </Form.Item>
           </Col>
         </Row>
@@ -235,7 +245,7 @@ const DocumentThirteenForm = ({ title }) => {
               name="nameeng"
               rules={[{ required: true, message: "กรุณากรอกชื่อ" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น Mr.Sati Mrs.Sati" />
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -244,7 +254,7 @@ const DocumentThirteenForm = ({ title }) => {
               name="surnameeng"
               rules={[{ required: true, message: "กรุณากรอกนามสกุล" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น Sumpachanya" />
             </Form.Item>
           </Col>
         </Row>
@@ -255,16 +265,6 @@ const DocumentThirteenForm = ({ title }) => {
               label="รหัสนักศึกษา"
               name="id_std"
               rules={[{ required: true, message: "กรุณากรอกรหัสนักศึกษา" }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} span={12}>
-            <Form.Item
-              label="เบอร์โทรศัพท์"
-              name="phone_std"
-              rules={[{ required: true, message: "กรุณากรอกเบอร์โทรศัพท์" }]}
             >
               <Input />
             </Form.Item>
@@ -1266,7 +1266,7 @@ const DocumentThirteenForm = ({ title }) => {
             name="signature_std"
             rules={[{ required: true, message: "กรุณาลงชื่อนักศึกษา" }]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น สติ สัมปชัญญะ" />
           </Form.Item>
         </Col>
 

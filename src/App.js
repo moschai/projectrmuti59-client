@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
-
+import moment from "moment";
+import "moment/locale/th";
 import "./styles/App.css";
 import "./styles/index.css";
 import { appPath } from "./router/path";
@@ -34,22 +35,54 @@ import { Spin } from "antd";
 import { authorityProfileAction } from "./redux/actions/AuthAction";
 import DocumentForAuthority from "./page/authority/DocumentForAuthority";
 import ApproveDocument from "./page/authority/ApproveDocument";
+import DocAuthTableSixSubject from "./page/authority/DocAuthTableSixSubject";
+import ApproveDocSubjectSixPage from "./page/authority/ApproveDocsubjectSix";
+import DocAuthTableSevenSubject from "./page/authority/DocAuthTableSevenSubject";
+import ApproveDocSubjectSevenPage from "./page/authority/ApproveDocsubjectSeven";
+import ApproveDocSubjectEightPage from "./page/authority/ApproveDocsubjectEight";
+import DocAuthTableEightSubject from "./page/authority/DocAuthTableEightSubject";
+import ApproveDocSubjectNinePage from "./page/authority/ApproveDocsubjectNine";
+import DocAuthTableNineSubject from "./page/authority/DocAuthTableNineSubject";
+import ApproveDocSubjectTenPage from "./page/authority/ApproveDocsubjectTen";
+import DocAuthTableTenSubject from "./page/authority/DocAuthTableTenSubject";
+import DocAuthTableSeventeenSubject from "./page/authority/DocAuthTableSeventeenSubject";
+import ApproveDocSubjectSeventeenPage from "./page/authority/ApproveDocsubjectSeventeen";
+import DocumentTagStudentPage from "./page/DocumentTagStudent";
+import PrivateAdminRoute from "./router/PrivateAdminRoute";
+import Admin from "./page/admin/Admin";
+import { AdminProfileAction } from "./redux/actions/AuthAdminAction";
+import AdminLoginPage from "./page/admin/Login";
+import AddRegisterAuthorityPage from "./page/admin/AddRegisterAuthorityPage";
+import AddSubjectPage from "./page/admin/AddSubjectPage";
+import DeleteDocumentPage from "./page/admin/DeleteDocumentPage";
 
+moment.locale("th");
 function App() {
   const { isAuthentication } = useSelector((state) => state.authState);
+  const adminState = useSelector((state) => state.authAdminState);
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     if (!isAuthentication && AuthService.getToken()) {
       fetchProfile();
     } else {
-      setLoading(false);
+      if (!adminState.isAuthentication && AuthService.adminGetToken()) {
+        adminFetchProfile();
+      } else {
+        setLoading(false);
+      }
     }
   }, []);
 
   const fetchProfile = async () => {
     setLoading(true);
     await dispatch(authorityProfileAction());
+    setLoading(false);
+  };
+
+  const adminFetchProfile = async () => {
+    setLoading(true);
+    await dispatch(AdminProfileAction());
     setLoading(false);
   };
   if (isLoading) {
@@ -75,15 +108,91 @@ function App() {
           path={`${appPath.authority.root}${appPath.authority.document}`}
           component={DocumentForAuthority}
         />
+
         <PrivateAuthorityRoute
           path={`${appPath.authority.root}${appPath.authority.approve}/:document`}
           component={ApproveDocument}
         />
 
         <PrivateAuthorityRoute
-          path={appPath.authority.root}
+          path={`${appPath.authority.root}${appPath.authority.approvesubjectsix}/:tableId`}
+          component={ApproveDocSubjectSixPage}
+        />
+
+        <PrivateAuthorityRoute
+          path={`${appPath.authority.root}${appPath.authority.approvesubjectsix}`}
+          component={DocAuthTableSixSubject}
+        />
+
+        <PrivateAuthorityRoute
+          path={`${appPath.authority.root}${appPath.authority.approvesubjectseven}/:tableId`}
+          component={ApproveDocSubjectSevenPage}
+        />
+
+        <PrivateAuthorityRoute
+          path={`${appPath.authority.root}${appPath.authority.approvesubjectseven}`}
+          component={DocAuthTableSevenSubject}
+        />
+
+        <PrivateAuthorityRoute
+          path={`${appPath.authority.root}${appPath.authority.approvesubjecteight}/:tableId`}
+          component={ApproveDocSubjectEightPage}
+        />
+
+        <PrivateAuthorityRoute
+          path={`${appPath.authority.root}${appPath.authority.approvesubjecteight}`}
+          component={DocAuthTableEightSubject}
+        />
+
+        <PrivateAuthorityRoute
+          path={`${appPath.authority.root}${appPath.authority.approvesubjectnine}/:tableId`}
+          component={ApproveDocSubjectNinePage}
+        />
+
+        <PrivateAuthorityRoute
+          path={`${appPath.authority.root}${appPath.authority.approvesubjectnine}`}
+          component={DocAuthTableNineSubject}
+        />
+
+        <PrivateAuthorityRoute
+          path={`${appPath.authority.root}${appPath.authority.approvesubjectten}/:tableId`}
+          component={ApproveDocSubjectTenPage}
+        />
+
+        <PrivateAuthorityRoute
+          path={`${appPath.authority.root}${appPath.authority.approvesubjectten}`}
+          component={DocAuthTableTenSubject}
+        />
+
+        <PrivateAuthorityRoute
+          path={`${appPath.authority.root}`}
           component={Authority}
         />
+
+        {/* admin */}
+
+        <Route
+          path={`${appPath.admin.root}${appPath.admin.login}`}
+          component={AdminLoginPage}
+        />
+
+        <PrivateAdminRoute
+          path={`${appPath.admin.root}${appPath.admin.addauthority}`}
+          component={AddRegisterAuthorityPage}
+        />
+
+        <PrivateAdminRoute
+          path={`${appPath.admin.root}${appPath.admin.addsubject}`}
+          component={AddSubjectPage}
+        />
+
+        <PrivateAdminRoute
+          path={`${appPath.admin.root}${appPath.admin.documentdelete}`}
+          component={DeleteDocumentPage}
+        />
+
+        <PrivateAdminRoute path={appPath.admin.root} component={Admin} />
+
         <Route path={appPath.documentOne} component={DocumentOnePage} />
         <Route path={appPath.documentTwo} component={DocumentTwoPage} />
         <Route path={appPath.documentThree} component={DocumentThreePage} />
@@ -114,6 +223,7 @@ function App() {
           path={appPath.documentEighteen}
           component={DocumentEighteenPage}
         />
+        <Route path={appPath.documentTag} component={DocumentTagStudentPage} />
 
         <Route path="*" component={Notfound} />
       </Switch>

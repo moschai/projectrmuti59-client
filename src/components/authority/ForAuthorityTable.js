@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Table, Radio, Divider } from "antd";
+import { Table } from "antd";
 import DocumentService from "../../services/DocumentService";
-import Modal from "antd/lib/modal/Modal";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { appPath } from "../../router/path";
 
-const RenderDocumentType = ({ type }) => {
+export const RenderDocumentType = ({ type }) => {
   if (type === 1) {
     return "แบบคำร้องทั่วไป";
   } else if (type === 2) {

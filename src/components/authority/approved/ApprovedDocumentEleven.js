@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from "react";
 import DocumentElevenService from "../../../services/DocumentElevenService";
-import { Spin } from "antd";
-import { Card, Col, Row } from "antd";
+import { endpointUrl } from "../../../config";
+import { Spin, Button, Divider, Avatar } from "antd";
+import { Card, Col, Row, Modal, Form, message } from "antd";
 import "../../../styles/App.css";
 import { lveducationNumberToString } from "../../../helpers/lveducation";
 import { purposeNumberToString } from "../../../helpers/doceleven";
+import { useLocation, useHistory } from "react-router-dom";
+import { appPath } from "../../../router/path";
+import ApproveModal from "../../approve/ApproveModal";
+import { useSelector } from "react-redux";
 
 const ApprovedDocEleven = ({ documentId }) => {
   const [isLoading, setLoading] = useState(true);
   const [document, setDocument] = useState({});
+  const [isOpen, setOpen] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [form] = Form.useForm();
+  const history = useHistory();
+  const [notApproved, setNotApproved] = useState(false);
+  const { profile } = useSelector((state) => state.authState);
   useEffect(() => {
     getDocumentEleven();
   }, []);
@@ -25,11 +36,99 @@ const ApprovedDocEleven = ({ documentId }) => {
     }
     setLoading(false);
   };
+
+  const approvedDocumentEleven = async (values) => {
+    setCreating(true);
+    try {
+      const documentApprovedElevenResponse = await DocumentElevenService.approvedDocumentEleven(
+        values,
+        documentId
+      );
+      console.log(values);
+
+      Modal.success({
+        title: "ดำเนินการสำเร็จ",
+
+        cancelText: false,
+      });
+      history.push(`${appPath.authority.root}${appPath.authority.document}`);
+
+      console.log(documentApprovedElevenResponse);
+    } catch (error) {
+      console.error(error);
+      message.error("ดำเนินการไม่สำเร็จ");
+    }
+    setCreating(false);
+    setOpen(false);
+  };
+
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+    approvedDocumentEleven(values);
+  };
+
+  const handleAppove = () => {
+    setNotApproved(false);
+    setOpen(true);
+  };
+
+  const handleNotApproved = () => {
+    setNotApproved(true);
+    setOpen(true);
+  };
+
+  const renderButtonNotAppovedHS = () => {
+    if (
+      profile.position_authority === "หัวหน้างานบริการหรือหัวหน้างานสำนักคณะบดี"
+    ) {
+      return (
+        <Button
+          onClick={handleNotApproved}
+          loading={creating}
+          disabled={creating}
+          type="primary"
+          danger
+        >
+          ไม่อนุมัติ
+        </Button>
+      );
+    }
+    return null;
+  };
+
+  const renderButtonNotAppoved = () => {
+    if (profile.position_authority === "คณะบดี") {
+      return (
+        <Button
+          onClick={handleNotApproved}
+          loading={creating}
+          disabled={creating}
+          type="primary"
+          danger
+        >
+          ไม่อนุมัติ
+        </Button>
+      );
+    }
+    return null;
+  };
+
   if (isLoading) {
     return <Spin tip="loading..." />;
   } else {
     return (
       <div className="blackground">
+        <ApproveModal
+          notApproved={notApproved}
+          isOpen={isOpen}
+          finish={onFinish}
+          loading={creating}
+          setLoading={setCreating}
+          form={form}
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
         <Row gutter={16}>
           <Col span={12}>
             <Card
@@ -85,6 +184,103 @@ const ApprovedDocEleven = ({ documentId }) => {
 
               <span className="FontThick">E-mail : </span>
               <span className="FontSize">{document.student.email_std}</span>
+
+              <Divider />
+              {document.number_sig > 0 && (
+                <div>
+                  <Divider />
+                  <div>
+                    ความคิดเห็นอาจารย์ที่ปรึกษา:{" "}
+                    {document.type_eleven.signature.advisor_comment}
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_eleven.signature.advisor_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    ความคิดเห็นหัวหน้าสาขาวิชา:{" "}
+                    {document.type_eleven.signature.mastersubject_comment}
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_eleven.signature.mastersubject_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    ความคิดเห็นหัวหน้างานบริการการศึกษา/หัวหน้าสำนักงานคณบดี
+                    อนุมัติ/ไม่อนุมัติ:{" "}
+                    {
+                      document.type_eleven.signature
+                        .head_service_or_deanoffice_aprrove
+                    }
+                  </div>
+
+                  <div>
+                    เนื่องจาก:{" "}
+                    {
+                      document.type_eleven.signature
+                        .head_service_or_deanoffice_since
+                    }
+                  </div>
+
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_eleven.signature.head_service_or_deanoffice_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    ผลการพิจารณาของคณบดี อนุมัติ/ไม่อนุมัติ:{" "}
+                    {document.type_eleven.signature.dean_approve}
+                  </div>
+
+                  <div>
+                    เนื่องจาก: {document.type_eleven.signature.dean_since}
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_eleven.signature.dean_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+                </div>
+              )}
+              <Row justify="end">
+                {renderButtonNotAppoved()}
+                {renderButtonNotAppovedHS()}
+                <Button
+                  onClick={handleAppove}
+                  loading={creating}
+                  disabled={creating}
+                >
+                  อนุมัติ
+                </Button>
+              </Row>
             </Card>
           </Col>
           {/* <Col span={8}>

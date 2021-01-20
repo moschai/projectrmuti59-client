@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from "react";
 import DocumentTwoService from "../../../services/DocumentTwoService";
-import { Spin } from "antd";
-import { Card, Col, Row } from "antd";
+import { Spin, Button, Divider, Avatar } from "antd";
+import { Card, Col, Row, Modal, Form, message } from "antd";
 import "../../../styles/App.css";
 import { lveducationNumberToString } from "../../../helpers/lveducation";
 import { dearNumberToString } from "../../../helpers/dear";
+import { endpointUrl } from "../../../config";
+import ApproveModal from "../../approve/ApproveModal";
+import { useLocation, useHistory } from "react-router-dom";
+import { appPath } from "../../../router/path";
+import { useSelector } from "react-redux";
 
 const ApprovedDocTwo = ({ documentId }) => {
   const [isLoading, setLoading] = useState(true);
   const [document, setDocument] = useState({});
+  const [isOpen, setOpen] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [notApproved, setNotApproved] = useState(false);
+  const { profile } = useSelector((state) => state.authState);
+  const [form] = Form.useForm();
+  const history = useHistory();
   useEffect(() => {
     getDocumentTwo();
   }, []);
@@ -26,13 +37,81 @@ const ApprovedDocTwo = ({ documentId }) => {
     }
     setLoading(false);
   };
+
+  const approvedDocumentTwo = async (values) => {
+    setCreating(true);
+    try {
+      const documentApprovedTwoResponse = await DocumentTwoService.approvedDocumentTwo(
+        values,
+        documentId
+      );
+      console.log(values);
+
+      Modal.success({
+        title: "ดำเนินการเสร็จสิ้น",
+
+        cancelText: false,
+      });
+      history.push(`${appPath.authority.root}${appPath.authority.document}`);
+
+      console.log(documentApprovedTwoResponse);
+    } catch (error) {
+      console.error(error);
+      message.error("ดำเนินการไม่สำเร็จ");
+    }
+    setCreating(false);
+    setOpen(false);
+  };
+
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+    approvedDocumentTwo(values);
+  };
+
+  const handleAppove = () => {
+    setNotApproved(false);
+    setOpen(true);
+  };
+
+  const handleNotApproved = () => {
+    setNotApproved(true);
+    setOpen(true);
+  };
+
+  const renderButtonNotAppoved = () => {
+    if (profile.position_authority === "คณะบดี") {
+      return (
+        <Button
+          onClick={handleNotApproved}
+          loading={creating}
+          disabled={creating}
+          type="primary"
+          danger
+        >
+          ไม่อนุมัติ
+        </Button>
+      );
+    }
+    return null;
+  };
   if (isLoading) {
     return <Spin tip="loading..." />;
   } else {
     return (
       <div className="blackground">
+        <ApproveModal
+          notApproved={notApproved}
+          isOpen={isOpen}
+          finish={onFinish}
+          loading={creating}
+          setLoading={setCreating}
+          form={form}
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
         <Row gutter={16}>
-          <Col span={14}>
+          <Col span={8}>
             <Card title="ใบคำร้องขอกลับเข้าศึกษา " bordered={false}>
               <span className="FontThick">ภาคเรียนที่ : </span>
               <span className="FontSize">{document.type_two.returnterm}</span>
@@ -47,9 +126,11 @@ const ApprovedDocTwo = ({ documentId }) => {
               <br />
               <span className="FontThick">
                 มีความประสงค์ ขอกลับเข้าศึกษาในมหาวิทยาลัย
-                เพื่อลงทะเบียนวิชาเรียนให้ครบตาม
                 <br />
-                โครงสร้าง หลักสูตรที่มหาวิทยาลัยกำหนด ในภาคการศึกษาที่:{" "}
+                เพื่อลงทะเบียนวิชาเรียนให้ครบตามโครงสร้าง
+                <br />
+                หลักสูตรที่มหาวิทยาลัยกำหนด <br />
+                ในภาคการศึกษาที่:{" "}
               </span>
               <span className="FontSize">{document.type_two.returnterm}</span>
               {"  "}
@@ -57,7 +138,7 @@ const ApprovedDocTwo = ({ documentId }) => {
               <span className="FontSize">{document.type_two.returnyear}</span>
             </Card>
           </Col>
-          <Col span={10}>
+          <Col span={16}>
             <Card title="" bordered={false}>
               <span className="FontThick">ชื่อ-นามสกุล : </span>
               <span className="FontSize">
@@ -103,6 +184,107 @@ const ApprovedDocTwo = ({ documentId }) => {
               <br />
               <span className="FontThick">E-mail : </span>
               <span className="FontSize">{document.student.email_std}</span>
+
+              <Divider />
+              {document.number_sig > 0 && (
+                <div>
+                  <Divider />
+                  <div>
+                    ความคิดเห็นอาจารย์ที่ปรึกษา:{" "}
+                    {document.type_two.signature.advisor_comment}
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_two.signature.advisor_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    ความคิดเห็นหัวหน้าสาขาวิชา:{" "}
+                    {document.type_two.signature.mastersubject_comment}
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_two.signature.mastersubject_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    ความคิดเห็นหัวหน้างานบริการการศึกษา/หัวหน้าสำนักงานคณบดี:{" "}
+                    {
+                      document.type_two.signature
+                        .head_service_or_deanoffice_comment
+                    }
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_two.signature.head_service_or_deanoffice_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    ความคิดเห็นรองคณบดีฝ่ายวิชาการและวิจัย:{" "}
+                    {document.type_two.signature.deputy_dean_research_comment}
+                  </div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_two.signature.deputy_dean_research_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+
+                  <Divider />
+                  <div>
+                    อนุมัติ/ไม่อนุมัติ:{" "}
+                    {document.type_two.signature.dean_approve}
+                  </div>
+
+                  <div>เนื่องจาก: {document.type_two.signature.dean_since}</div>
+                  <div className="text-center">
+                    <Avatar
+                      style={{
+                        width: 100,
+                        height: 40,
+                      }}
+                      src={`${endpointUrl}upload/signature/${document.type_two.signature.dean_path_sig}`}
+                      alt="signature"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <Row justify="end">
+                {renderButtonNotAppoved()}
+                <Button
+                  onClick={handleAppove}
+                  loading={creating}
+                  disabled={creating}
+                >
+                  อนุมัติ
+                </Button>
+              </Row>
             </Card>
           </Col>
           {/* <Col span={8}>

@@ -20,11 +20,25 @@ export const appPath = {
   documentSixteen: "/soccessdelay",
   documentSeventeen: "/document-seventeen",
   documentEighteen: "/document-eighteen",
+  documentTag: "/DocumentTag",
 
   authority: {
     root: "/authority",
     document: "/document",
     approve: "/approve",
+    approvesubjectsix: "/docauthsubjectsix",
+    approvesubjectseven: "/docauthsubjectseven",
+    approvesubjecteight: "/docauthsubjecteight",
+    approvesubjectnine: "/docauthsubjectnine",
+    approvesubjectten: "/docauthsubjectten",
+    approvesubjectsnotsameteen: "/docauthsubjectsnotsameteen",
+  },
+  admin: {
+    root: "/admin",
+    login: "/login",
+    addsubject: "/addsubject",
+    addauthority: "/addauthority",
+    documentdelete: "/documentdelete",
   },
 };
 

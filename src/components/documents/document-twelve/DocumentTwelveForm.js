@@ -71,6 +71,17 @@ const DocumentTwelveForm = ({ title }) => {
         cancelText: false,
       });
 
+      Modal.warning({
+        title: "คำเตือน โปรดอ่านและปฏิบัติตาม",
+        content: (
+          <span>
+            {" "}
+            ( โปรดจดจำรหัสใบคำร้องเพื่อใช้ในการติดตามสถานะใบคำร้องของท่าน
+            เมื่อกดปุ่ม OK)
+          </span>
+        ),
+      });
+
       console.log(documentTwelveResponse);
     } catch (error) {
       console.error(error);
@@ -108,7 +119,7 @@ const DocumentTwelveForm = ({ title }) => {
               name="name_std"
               rules={[{ required: true, message: "กรุณากรอกชื่อ" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น นายสติ นางสาวสติ" />
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -117,7 +128,7 @@ const DocumentTwelveForm = ({ title }) => {
               name="surname_std"
               rules={[{ required: true, message: "กรุณากรอกนามสกุล" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น สัมปชัญญะ" />
             </Form.Item>
           </Col>
         </Row>
@@ -129,7 +140,7 @@ const DocumentTwelveForm = ({ title }) => {
               name="id_std"
               rules={[{ required: true, message: "กรุณากรอกรหัสนักศึกษา" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น 64322110243-4" />
             </Form.Item>
           </Col>
 
@@ -139,17 +150,13 @@ const DocumentTwelveForm = ({ title }) => {
               name="phone_std"
               rules={[{ required: true, message: "กรุณากรอกเบอร์โทรศัพท์" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น 0899998888" />
             </Form.Item>
           </Col>
         </Row>
 
         <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="อีเมลล์(E-mail)"
-            name="email_std"
-            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
-          >
+          <Form.Item label="อีเมลล์(E-mail)" name="email_std">
             <Input />
           </Form.Item>
         </Col>
@@ -240,10 +247,10 @@ const DocumentTwelveForm = ({ title }) => {
             name="signature_std"
             rules={[{ required: true, message: "กรุณาลงชื่อนักศึกษา" }]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น สติ สัมปชัญญะ" />
           </Form.Item>
         </Col>
-
+        {/* 
         <h3 className="text-center">คำยินยอมของผู้ปกครอง</h3>
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -286,7 +293,7 @@ const DocumentTwelveForm = ({ title }) => {
               <Input />
             </Form.Item>
           </Col>
-        </Row>
+        </Row> */}
 
         <Divider />
         <h4>สาขาวิชาที่นักศึกษาสังกัด</h4>

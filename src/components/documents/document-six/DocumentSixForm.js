@@ -106,6 +106,17 @@ const DocumentSixForm = ({ title }) => {
         cancelText: false,
       });
 
+      Modal.warning({
+        title: "คำเตือน โปรดอ่านและปฏิบัติตาม",
+        content: (
+          <span>
+            {" "}
+            ( โปรดจดจำรหัสใบคำร้องเพื่อใช้ในการติดตามสถานะใบคำร้องของท่าน
+            เมื่อกดปุ่ม OK)
+          </span>
+        ),
+      });
+
       console.log(documentSixResponse);
     } catch (error) {
       console.error(error);
@@ -149,10 +160,7 @@ const DocumentSixForm = ({ title }) => {
         <Form.Item name="dear" label="เรียน">
           <Radio.Group>
             <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
-            <Radio value="11">คณบดี</Radio>
-            <Radio value="12">คณะวิศวกรรมศาสตร์</Radio>
-            <Radio value="13">คณะครุศาสตร์อุตสาหกรรม</Radio>
-            <Radio value="14">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio>
+            <Radio value="11">คณบดีคณะครุศาสตร์อุตสาหกรรม</Radio>
           </Radio.Group>
         </Form.Item>
         <Row gutter={[8]}>
@@ -162,7 +170,7 @@ const DocumentSixForm = ({ title }) => {
               name="name_std"
               rules={[{ required: true, message: "กรุณากรอกชื่อ" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น นายสติ นางสาวสติ" />
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -171,10 +179,11 @@ const DocumentSixForm = ({ title }) => {
               name="surname_std"
               rules={[{ required: true, message: "กรุณากรอกนามสกุล" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น สัมปชัญญะ" />
             </Form.Item>
           </Col>
         </Row>
+
         <Row gutter={[8]}>
           <Col xs={24} sm={24} md={12} span={12}>
             <Form.Item
@@ -182,7 +191,7 @@ const DocumentSixForm = ({ title }) => {
               name="id_std"
               rules={[{ required: true, message: "กรุณากรอกรหัสนักศึกษา" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น 64322110243-4" />
             </Form.Item>
           </Col>
 
@@ -192,17 +201,13 @@ const DocumentSixForm = ({ title }) => {
               name="phone_std"
               rules={[{ required: true, message: "กรุณากรอกเบอร์โทรศัพท์" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น 0899998888" />
             </Form.Item>
           </Col>
         </Row>
 
         <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="อีเมลล์(E-mail)"
-            name="email_std"
-            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
-          >
+          <Form.Item label="อีเมลล์(E-mail)" name="email_std">
             <Input />
           </Form.Item>
         </Col>
@@ -246,7 +251,7 @@ const DocumentSixForm = ({ title }) => {
             name="classyear"
             rules={[{ required: true, message: "กรุณากรอกชั้นปีที่เรียน" }]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น TEC5N" />
           </Form.Item>
 
           <Form.Item
@@ -259,7 +264,7 @@ const DocumentSixForm = ({ title }) => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น 5" />
           </Form.Item>
         </Row>
         <Row gutter={[6]}>
@@ -323,20 +328,6 @@ const DocumentSixForm = ({ title }) => {
                           fieldKey={[field.fieldKey, "id_subject"]}
                           rules={rules}
                         >
-                          {/* <Input
-                            placeholder="รหัสวิชา"
-                            onChange={() => {
-                              const tables = form.getFieldValue(`tables`);
-                              if (tables[index]) {
-                                tables[index].namesubject = "test";
-                              }
-                              console.log(tables);
-
-                              setFieldsValue({
-                                tables,
-                              });
-                            }}
-                          /> */}
                           <AutoComplete
                             style={{ width: 200, textAlign: "left" }}
                             options={options}
@@ -429,33 +420,21 @@ const DocumentSixForm = ({ title }) => {
                     }}
                     style={{ width: "60%" }}
                   >
-                    <PlusOutlined /> Add field
+                    <PlusOutlined /> เพิ่มข้อมูล
                   </Button>
                 </Form.Item>
               </div>
             );
           }}
         </Form.List>
-        {/* <DynamicFields
-          {...form}
-          name="tables"
-          fields={[
-            {
-              name: "country",
-              field: () => <Input placeholder={"country"} />,
-            },
-            { name: "state", field: () => <Input placeholder={"state"} /> },
-            { name: "city", field: () => <Input placeholder={"city"} /> },
-            { name: "street", field: () => <Input placeholder={"street"} /> },
-          ]}
-        /> */}
+
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item
             label="ลงชื่อนักศึกษา"
             name="signature_std"
             rules={[{ required: true, message: "กรุณาลงชื่อนักศึกษา" }]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น สติ สัมปชัญญะ" />
           </Form.Item>
         </Col>
         <Divider />

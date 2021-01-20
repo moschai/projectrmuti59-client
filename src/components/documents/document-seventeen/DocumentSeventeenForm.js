@@ -98,7 +98,7 @@ const DocumentSeventeenForm = ({ title }) => {
   const createDocumentSeventeen = async (values) => {
     setCreating(true);
     try {
-      const documentEighteenResponse = await DocumentSeventeenService.createDocumentSeventeen(
+      const documentSeventeenResponse = await DocumentSeventeenService.createDocumentSeventeen(
         values
       );
       form.resetFields();
@@ -106,13 +106,24 @@ const DocumentSeventeenForm = ({ title }) => {
         title: "สร้างแบบคำร้องสำเร็จ",
         content: (
           <span>
-            รหัสสำหรับติดตามแบบคำร้องคือ {documentEighteenResponse.id}
+            รหัสสำหรับติดตามแบบคำร้องคือ {documentSeventeenResponse.id}
           </span>
         ),
         cancelText: false,
       });
 
-      console.log(documentEighteenResponse);
+      Modal.warning({
+        title: "คำเตือน โปรดอ่านและปฏิบัติตาม",
+        content: (
+          <span>
+            {" "}
+            ( โปรดจดจำรหัสใบคำร้องเพื่อใช้ในการติดตามสถานะใบคำร้องของท่าน
+            เมื่อกดปุ่ม OK)
+          </span>
+        ),
+      });
+
+      console.log(documentSeventeenResponse);
     } catch (error) {
       console.error(error);
       message.error("สร้างแบบคำร้องไม่สำเร็จ");
@@ -152,7 +163,7 @@ const DocumentSeventeenForm = ({ title }) => {
               name="name_std"
               rules={[{ required: true, message: "กรุณากรอกชื่อ" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น นายสติ นางสาวสติ" />
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -161,7 +172,7 @@ const DocumentSeventeenForm = ({ title }) => {
               name="surname_std"
               rules={[{ required: true, message: "กรุณากรอกนามสกุล" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น สัมปชัญญะ" />
             </Form.Item>
           </Col>
         </Row>
@@ -173,7 +184,7 @@ const DocumentSeventeenForm = ({ title }) => {
               name="id_std"
               rules={[{ required: true, message: "กรุณากรอกรหัสนักศึกษา" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น 64322110243-4" />
             </Form.Item>
           </Col>
 
@@ -183,17 +194,13 @@ const DocumentSeventeenForm = ({ title }) => {
               name="phone_std"
               rules={[{ required: true, message: "กรุณากรอกเบอร์โทรศัพท์" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น 0899998888" />
             </Form.Item>
           </Col>
         </Row>
 
         <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="อีเมลล์(E-mail)"
-            name="email_std"
-            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
-          >
+          <Form.Item label="อีเมลล์(E-mail)" name="email_std">
             <Input />
           </Form.Item>
         </Col>
@@ -245,24 +252,10 @@ const DocumentSeventeenForm = ({ title }) => {
                       </Col>
                       <Col>
                         <Form.Item
-                          name={[field.name, "subject"]}
-                          fieldKey={[field.fieldKey, "subject"]}
+                          name={[field.name, "id_subject"]}
+                          fieldKey={[field.fieldKey, "id_subject"]}
                           rules={rules}
                         >
-                          {/* <Input
-                            placeholder="รหัสวิชา"
-                            onChange={() => {
-                              const tables = form.getFieldValue(`tables`);
-                              if (tables[index]) {
-                                tables[index].namesubject = "test";
-                              }
-                              console.log(tables);
-
-                              setFieldsValue({
-                                tables,
-                              });
-                            }}
-                          /> */}
                           <AutoComplete
                             style={{ width: 200, textAlign: "left" }}
                             options={options}
@@ -348,7 +341,7 @@ const DocumentSeventeenForm = ({ title }) => {
                     }}
                     style={{ width: "60%" }}
                   >
-                    <PlusOutlined /> Add field
+                    <PlusOutlined /> เพิ่มข้อมูล
                   </Button>
                 </Form.Item>
               </div>
@@ -362,10 +355,9 @@ const DocumentSeventeenForm = ({ title }) => {
             name="signature_std"
             rules={[{ required: true, message: "กรุณาลงชื่อนักศึกษา" }]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น สติ สัมปชัญญะ" />
           </Form.Item>
         </Col>
-
         <Divider />
         <h4>สาขาวิชาที่นักศึกษาสังกัด</h4>
         <Col xs={24} sm={24} md={12} span={12}>

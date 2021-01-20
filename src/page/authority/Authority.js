@@ -10,6 +10,10 @@ export default function Authority() {
   const { profile, isAuthentication } = useSelector((state) => state.authState);
 
   return (
-    <BaseLayoutAuthority activeMenu="/">ข่าวสารอัพเดทต่างๆ</BaseLayoutAuthority>
+    <BaseLayoutAuthority activeMenu="/">
+      <div className="text-center ">
+        <img src="/authoritybk.png" style={{ width: 1111, height: 678 }} />
+      </div>
+    </BaseLayoutAuthority>
   );
 }

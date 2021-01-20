@@ -13,7 +13,6 @@ export default function BaseLayoutAuthority({ children, activeMenu }) {
         <Container>
           <Content style={{ minHeight: "88vh" }}>{children}</Content>
         </Container>
-        <LayoutFooter />
       </Layout>
     </>
   );

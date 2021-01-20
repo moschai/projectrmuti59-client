@@ -17,10 +17,10 @@ function LayoutHeaderStudent({ history }) {
   return (
     <Container>
       <Menu onClick={handleClick} selectedKeys={current} mode="horizontal">
-        <Menu.Item key="student">
+        {/* <Menu.Item key="student">
           <HomeOutlined />
           หน้าแรก
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.SubMenu
           title={
             <span className="submenu-title-wrapper">
@@ -32,19 +32,19 @@ function LayoutHeaderStudent({ history }) {
           <Menu.Item key="generalrequest">แบบคำร้องทั่วไป</Menu.Item>
           <Menu.Item key="returntostudy">แบบคำร้องขอกลับเข้าศึกษา</Menu.Item>
           <Menu.Item key="pleasestatus">
-            แบบคำร้องขอคืนสภาพการเป็นนักศึกษา(เนื่องจากถูกถอนชื่อจากการเป็นนักศึกษา)
+            แบบคำร้องขอคืนสภาพการเป็นนักศึกษา
           </Menu.Item>
           <Menu.Item key="enrollmentlow">
             แบบคำร้องขอลงทะเบียน เกิน/ต่ำกว่าเกณฑ์
           </Menu.Item>
           <Menu.Item key="maintainstatus">
-            คำร้องขอลาพักการเรียน/รักษาสภาพเพื่อรอสำเร็จการศึกษา
+            คำร้องขอลาพักการเรียน/รักษาสถานภาพการเป็นนักศึกษา
           </Menu.Item>
           <Menu.Item key="adddelay">
             แบบคำร้องขอลงทะเบียนเพิ่ม/ถอนรายวิชาล่าช้า
           </Menu.Item>
           <Menu.Item key="withdrawdelay">แบบคำร้องขอลงทะเบียนเรียน</Menu.Item>
-          <Menu.Item key="grouptransfer">แบบคำร้องขอย้ายกลุ่มเรียนน</Menu.Item>
+          <Menu.Item key="grouptransfer">แบบคำร้องขอย้ายกลุ่มเรียน</Menu.Item>
           <Menu.Item key="latepayment">แบบคำร้องขอชำระเงินล่าช้า</Menu.Item>
           <Menu.Item key="coursecomparison">
             แบบคำร้องขอลงทะเบียนเรียนเทียบรายวิชา
@@ -65,12 +65,11 @@ function LayoutHeaderStudent({ history }) {
           <Menu.Item key="soccessdelay">
             แบบคำร้องขอสำเร็จการศึกษาล่าช้า
           </Menu.Item>
-          <Menu.Item key="requestmoreseats">แบบคำร้องขอเพิ่มที่นั่ง</Menu.Item>
-          <Menu.Item key="document-eighteen">
-            แบบคำร้องขอเพิ่มที่นั่ง(สำรอง)
+          <Menu.Item key="document-seventeen">
+            คำร้องขอแก้ไขหมวดวิชาตามโครงสร้างหลักสูตร
           </Menu.Item>
         </Menu.SubMenu>
-        <Menu.Item key="tagDocument">
+        <Menu.Item key="DocumentTag">
           <TagsOutlined />
           ติดตามแบบคำร้อง
         </Menu.Item>

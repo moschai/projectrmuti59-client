@@ -112,6 +112,17 @@ const DocumentEightForm = ({ title }) => {
         cancelText: false,
       });
 
+      Modal.warning({
+        title: "คำเตือน โปรดอ่านและปฏิบัติตาม",
+        content: (
+          <span>
+            {" "}
+            ( โปรดจดจำรหัสใบคำร้องเพื่อใช้ในการติดตามสถานะใบคำร้องของท่าน
+            เมื่อกดปุ่ม OK)
+          </span>
+        ),
+      });
+
       console.log(documentEightResponse);
     } catch (error) {
       console.error(error);
@@ -171,7 +182,7 @@ const DocumentEightForm = ({ title }) => {
               name="name_std"
               rules={[{ required: true, message: "กรุณากรอกชื่อ" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น นายสติ นางสาวสติ" />
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -180,7 +191,7 @@ const DocumentEightForm = ({ title }) => {
               name="surname_std"
               rules={[{ required: true, message: "กรุณากรอกนามสกุล" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น สัมปชัญญะ" />
             </Form.Item>
           </Col>
         </Row>
@@ -192,7 +203,7 @@ const DocumentEightForm = ({ title }) => {
               name="id_std"
               rules={[{ required: true, message: "กรุณากรอกรหัสนักศึกษา" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น 64322110243-4" />
             </Form.Item>
           </Col>
 
@@ -202,17 +213,13 @@ const DocumentEightForm = ({ title }) => {
               name="phone_std"
               rules={[{ required: true, message: "กรุณากรอกเบอร์โทรศัพท์" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น 0899998888" />
             </Form.Item>
           </Col>
         </Row>
 
         <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="อีเมลล์(E-mail)"
-            name="email_std"
-            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
-          >
+          <Form.Item label="อีเมลล์(E-mail)" name="email_std">
             <Input />
           </Form.Item>
         </Col>
@@ -257,7 +264,7 @@ const DocumentEightForm = ({ title }) => {
             name="classyear"
             rules={[{ required: true, message: "กรุณากรอกชั้นปีที่เรียน" }]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น TEC5N" />
           </Form.Item>
 
           <Form.Item
@@ -270,7 +277,7 @@ const DocumentEightForm = ({ title }) => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น 5" />
           </Form.Item>
         </Row>
 
@@ -341,20 +348,6 @@ const DocumentEightForm = ({ title }) => {
                           fieldKey={[field.fieldKey, "id_subject"]}
                           rules={rules}
                         >
-                          {/* <Input
-                            placeholder="รหัสวิชา"
-                            onChange={() => {
-                              const tables = form.getFieldValue(`tables`);
-                              if (tables[index]) {
-                                tables[index].namesubject = "test";
-                              }
-                              console.log(tables);
-
-                              setFieldsValue({
-                                tables,
-                              });
-                            }}
-                          /> */}
                           <AutoComplete
                             style={{ width: 200, textAlign: "left" }}
                             options={options}
@@ -393,7 +386,7 @@ const DocumentEightForm = ({ title }) => {
                           fieldKey={[field.fieldKey, "oldgroubstudy"]}
                           rules={rules}
                         >
-                          <Input placeholder="กลุ่มเรียนเก่า" />
+                          <Input placeholder="กลุ่มเรียนเก่า เช่น TEC" />
                         </Form.Item>
                       </Col>
                       <Col>
@@ -419,13 +412,13 @@ const DocumentEightForm = ({ title }) => {
                           fieldKey={[field.fieldKey, "newgroupstudy"]}
                           rules={rules}
                         >
-                          <Input placeholder="กลุ่มเรียนใหม่" />
+                          <Input placeholder="กลุ่มเรียนใหม่ เช่น TEZ" />
                         </Form.Item>
                       </Col>
                       <Col>
                         <Form.Item
-                          name={[field.name, "advisorr"]}
-                          fieldKey={[field.fieldKey, "advisorr"]}
+                          name={[field.name, "advisornew"]}
+                          fieldKey={[field.fieldKey, "advisornew"]}
                           rules={rules}
                         >
                           <Select placeholder="ระบุอาจารย์ประจำวิชา">
@@ -460,26 +453,13 @@ const DocumentEightForm = ({ title }) => {
                     }}
                     style={{ width: "60%" }}
                   >
-                    <PlusOutlined /> Add field
+                    <PlusOutlined /> เพิ่มข้อมูล
                   </Button>
                 </Form.Item>
               </div>
             );
           }}
         </Form.List>
-        {/* <DynamicFields
-          {...form}
-          name="tables"
-          fields={[
-            {
-              name: "country",
-              field: () => <Input placeholder={"country"} />,
-            },
-            { name: "state", field: () => <Input placeholder={"state"} /> },
-            { name: "city", field: () => <Input placeholder={"city"} /> },
-            { name: "street", field: () => <Input placeholder={"street"} /> },
-          ]}
-        /> */}
 
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item
@@ -487,7 +467,7 @@ const DocumentEightForm = ({ title }) => {
             name="signature_std"
             rules={[{ required: true, message: "กรุณาลงชื่อนักศึกษา" }]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น สติ สัมปชัญญะ" />
           </Form.Item>
         </Col>
 
@@ -504,7 +484,7 @@ const DocumentEightForm = ({ title }) => {
               },
             ]}
           >
-            <Select placeholder="กรุณาระบุอาจารย์ที่ปรึกษา">
+            <Select placeholder="กรุณาระบุอาจารย์ผู้สอนกลุ่มเรียนเดิม">
               {authoritys
                 .filter((authority) => {
                   if (!authority.major) {
@@ -523,7 +503,7 @@ const DocumentEightForm = ({ title }) => {
         <Col xs={24} sm={24} md={12} span={12}>
           <Form.Item
             label="อาจารย์ผู้สอนกลุ่มเรียนกลุ่มเรียนใหม่"
-            name="mastersubject_id"
+            name="advisornew_id"
             rules={[
               {
                 required: true,
@@ -531,7 +511,7 @@ const DocumentEightForm = ({ title }) => {
               },
             ]}
           >
-            <Select placeholder="กรุณาระบุหัวหน้าสาขา">
+            <Select placeholder="กรุณาระบุอาจารย์ผู้สอนกลุ่มเรียนใหม่">
               {authoritys
                 .filter((authority) => {
                   if (!authority.major) {

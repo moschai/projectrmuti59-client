@@ -73,6 +73,17 @@ const DocumentFourteenForm = ({ title }) => {
         cancelText: false,
       });
 
+      Modal.warning({
+        title: "คำเตือน โปรดอ่านและปฏิบัติตาม",
+        content: (
+          <span>
+            {" "}
+            ( โปรดจดจำรหัสใบคำร้องเพื่อใช้ในการติดตามสถานะใบคำร้องของท่าน
+            เมื่อกดปุ่ม OK)
+          </span>
+        ),
+      });
+
       console.log(documentFourteenResponse);
     } catch (error) {
       console.error(error);
@@ -106,10 +117,7 @@ const DocumentFourteenForm = ({ title }) => {
         <Form.Item name="dear" label="เรียน">
           <Radio.Group>
             <Radio value="10">รองอธิการบดีประจำวิทยาเขตขอนแก่น</Radio>
-            <Radio value="11">คณบดี</Radio>
-            <Radio value="12">คณะวิศวกรรมศาสตร์</Radio>
-            <Radio value="13">คณะครุศาสตร์อุตสาหกรรม</Radio>
-            <Radio value="14">คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ</Radio>
+            <Radio value="11">คณบดีคณะครุศาสตร์อุตสาหกรรม</Radio>
           </Radio.Group>
         </Form.Item>
 
@@ -120,7 +128,7 @@ const DocumentFourteenForm = ({ title }) => {
               name="name_std"
               rules={[{ required: true, message: "กรุณากรอกชื่อ" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น นายสติ นางสาวสติ" />
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} span={12}>
@@ -129,7 +137,7 @@ const DocumentFourteenForm = ({ title }) => {
               name="surname_std"
               rules={[{ required: true, message: "กรุณากรอกนามสกุล" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น สัมปชัญญะ" />
             </Form.Item>
           </Col>
         </Row>
@@ -141,7 +149,7 @@ const DocumentFourteenForm = ({ title }) => {
               name="id_std"
               rules={[{ required: true, message: "กรุณากรอกรหัสนักศึกษา" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น 64322110243-4" />
             </Form.Item>
           </Col>
 
@@ -151,17 +159,13 @@ const DocumentFourteenForm = ({ title }) => {
               name="phone_std"
               rules={[{ required: true, message: "กรุณากรอกเบอร์โทรศัพท์" }]}
             >
-              <Input />
+              <Input placeholder="ตัวอย่างเช่น 0899998888" />
             </Form.Item>
           </Col>
         </Row>
 
         <Col xs={24} sm={24} md={12} span={12}>
-          <Form.Item
-            label="อีเมลล์(E-mail)"
-            name="email_std"
-            rules={[{ required: true, message: "กรุณากรอกอีเมลล์(E-mail)" }]}
-          >
+          <Form.Item label="อีเมลล์(E-mail)" name="email_std">
             <Input />
           </Form.Item>
         </Col>
@@ -205,7 +209,7 @@ const DocumentFourteenForm = ({ title }) => {
             name="classyear"
             rules={[{ required: true, message: "กรุณากรอกชั้นปีที่เรียน" }]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น TEC5N" />
           </Form.Item>
 
           <Form.Item
@@ -218,7 +222,7 @@ const DocumentFourteenForm = ({ title }) => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น 5" />
           </Form.Item>
         </Row>
 
@@ -240,10 +244,9 @@ const DocumentFourteenForm = ({ title }) => {
             name="signature_std"
             rules={[{ required: true, message: "กรุณาลงชื่อนักศึกษา" }]}
           >
-            <Input />
+            <Input placeholder="ตัวอย่างเช่น สติ สัมปชัญญะ" />
           </Form.Item>
         </Col>
-
         <Divider />
         <h4>สาขาวิชาที่นักศึกษาสังกัด</h4>
         <Col xs={24} sm={24} md={12} span={12}>
